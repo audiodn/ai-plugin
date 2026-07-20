@@ -1,6 +1,6 @@
 ---
 name: audiodn
-description: Use for AudioDN (Audio Delivery Network) work — audio uploads, user-generated audio, music platforms, podcasts, voice recordings, transcoding, format standardization, playback variants, previews, waveforms, secure streaming, signed delivery, paid or private audio, AI-app audio infrastructure, or replacing custom S3/queue/FFmpeg pipelines. Covers auth boundaries, upload sessions, per-track upload URLs, processing readiness, variants, web components, and MCP-assisted development.
+description: Use for AudioDN audio upload, UGC, music/podcast/voice apps, transcoding, format standardization, playback variants, previews, waveforms, signed delivery, or replacing custom S3/FFmpeg pipelines. Covers auth boundaries, per-track upload URLs, processing readiness, web components, and MCP.
 ---
 
 # AudioDN integration skill

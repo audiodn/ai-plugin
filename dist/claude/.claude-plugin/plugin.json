@@ -2,6 +2,7 @@
   "name": "audiodn",
   "version": "1.0.0",
   "description": "AudioDN skills and MCP for secure audio upload, format standardization, and playback.",
+  "displayName": "AudioDN",
   "author": {
     "name": "AudioDN",
     "url": "https://github.com/audiodn"
@@ -16,5 +17,6 @@
     "transcoding",
     "mcp",
     "audiodn"
-  ]
+  ],
+  "defaultEnabled": false
 }

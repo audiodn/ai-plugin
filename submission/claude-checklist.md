@@ -4,6 +4,11 @@
 
 **Ready after manual account work** — bundle prepared; submit via Claude community marketplace process (`anthropics/claude-plugins-community`).
 
+QA notes (2026-07-19):
+- `.mcp.json` includes required `"type": "http"` (without this Claude skips remote MCP as broken stdio).
+- `displayName: "AudioDN"` and `defaultEnabled: false` (opt-in for external MCP).
+- Marketplace entry includes category, tags, author, homepage.
+
 ## Validation
 
 When Claude Code CLI is installed:

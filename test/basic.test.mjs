@@ -30,16 +30,29 @@ describe('ai-plugin', () => {
         .url,
       url,
     );
-    assert.equal(
-      JSON.parse(readFileSync(join(ROOT, 'dist', 'claude', '.mcp.json'), 'utf8')).mcpServers.audiodn
-        .url,
-      url,
+    const claude = JSON.parse(readFileSync(join(ROOT, 'dist', 'claude', '.mcp.json'), 'utf8'));
+    assert.equal(claude.mcpServers.audiodn.url, url);
+    assert.equal(claude.mcpServers.audiodn.type, 'http');
+    const openai = JSON.parse(readFileSync(join(ROOT, 'dist', 'openai', '.mcp.json'), 'utf8'));
+    assert.equal(openai.audiodn.url, url);
+    assert.equal(openai.mcpServers, undefined);
+  });
+
+  it('OpenAI manifest includes install-surface interface metadata', () => {
+    const man = JSON.parse(
+      readFileSync(join(ROOT, 'dist', 'openai', '.codex-plugin', 'plugin.json'), 'utf8'),
     );
-    assert.equal(
-      JSON.parse(readFileSync(join(ROOT, 'dist', 'openai', '.mcp.json'), 'utf8')).mcpServers.audiodn
-        .url,
-      url,
+    assert.equal(man.interface.displayName, 'AudioDN');
+    assert.ok(man.interface.privacyPolicyURL.includes('/privacy'));
+    assert.ok(man.interface.logo.startsWith('./'));
+  });
+
+  it('Claude manifest has displayName and http MCP type', () => {
+    const man = JSON.parse(
+      readFileSync(join(ROOT, 'dist', 'claude', '.claude-plugin', 'plugin.json'), 'utf8'),
     );
+    assert.equal(man.displayName, 'AudioDN');
+    assert.equal(man.defaultEnabled, false);
   });
 
   it('build is reproducible for platform trees', () => {

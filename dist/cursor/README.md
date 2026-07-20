@@ -15,6 +15,7 @@ AudioDN integration skill, upload/playback workflows, and hosted MCP for Cursor 
 - Registry: `net.audiodelivery/mcp`
 - Local stdio: `npx -y @audiodn/mcp` with `ADN_API_KEY`
 - Knowledge/doc tools work without a key on the hosted server; live API tools need a Bearer API Access key.
+- Optional live-API auth: add headers `"Authorization": "Bearer ${env:ADN_API_KEY}"` in MCP settings (Cursor env interpolation).
 
 ## Canonical resources
 

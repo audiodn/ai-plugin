@@ -29,7 +29,7 @@
         "audiodn",
         "cdn"
       ],
-      "logo": "dist/cursor/assets/logo.png",
+      "logo": "dist/cursor/assets/logo-square.png",
       "category": "Developer Tools"
     }
   ]

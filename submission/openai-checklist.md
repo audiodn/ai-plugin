@@ -4,7 +4,7 @@
 
 | Area | Status |
 |------|--------|
-| Plugin bundle (`dist/openai`) | Ready |
+| Plugin bundle (`dist/openai`) | Ready (rich `interface` metadata + direct-map `.mcp.json`) |
 | Skill readiness | Ready |
 | MCP readiness | **Blocked** — see [mcp-readiness.md](./mcp-readiness.md) |
 | Tool-annotation readiness | **Blocked** (WRITE tools missing explicit `destructiveHint: false`) |

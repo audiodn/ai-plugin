@@ -2,6 +2,11 @@
 /**
  * Deterministically generate dist/{cursor,claude,openai} from src/.
  * No symlinks. Real file copies only.
+ *
+ * Platform MCP notes (verified against current docs):
+ * - Cursor: remote entries use `url` (optional headers); no type required.
+ * - Claude: remote entries MUST include `"type": "http"` (or streamable-http).
+ * - OpenAI/Codex: `.mcp.json` is a direct server map or `{ mcp_servers: ... }`.
  */
 import {
   cpSync,
@@ -52,6 +57,13 @@ function copyText(from, to) {
 }
 
 function pluginReadme(listing, platform) {
+  const authNote =
+    platform === 'Claude Code'
+      ? `- Optional live-API auth: set \`ADN_API_KEY\` and configure headers as \`Authorization: Bearer \${ADN_API_KEY}\` (Claude expands env vars in \`.mcp.json\`).`
+      : platform === 'Cursor'
+        ? `- Optional live-API auth: add headers \`"Authorization": "Bearer \${env:ADN_API_KEY}"\` in MCP settings (Cursor env interpolation).`
+        : `- Optional live-API auth: configure the hosted MCP Bearer key in the host credential UI (do not commit keys).`;
+
   return `# ${listing.displayName} plugin (${platform})
 
 ${listing.description}
@@ -69,6 +81,7 @@ ${listing.description}
 - Registry: \`${listing.mcp.registryName}\`
 - Local stdio: \`npx -y @audiodn/mcp\` with \`ADN_API_KEY\`
 - Knowledge/doc tools work without a key on the hosted server; live API tools need a Bearer API Access key.
+${authNote}
 
 ## Canonical resources
 
@@ -82,12 +95,40 @@ MIT — see LICENSE.
 `;
 }
 
-function mcpConfigHosted(listing) {
+/** Cursor remote MCP — url only; type not required. */
+function mcpConfigCursor(listing) {
   return {
     mcpServers: {
       audiodn: {
         url: listing.mcp.hostedUrl,
       },
+    },
+  };
+}
+
+/**
+ * Claude remote MCP — type is required.
+ * Without type, Claude treats the entry as stdio and skips it.
+ */
+function mcpConfigClaude(listing) {
+  return {
+    mcpServers: {
+      audiodn: {
+        type: 'http',
+        url: listing.mcp.hostedUrl,
+      },
+    },
+  };
+}
+
+/**
+ * OpenAI/Codex — direct server map (not mcpServers wrapper).
+ * Portal submission still uses the hosted URL separately for the app/MCP review.
+ */
+function mcpConfigOpenai(listing) {
+  return {
+    audiodn: {
+      url: listing.mcp.hostedUrl,
     },
   };
 }
@@ -110,7 +151,7 @@ function buildCursor(listing) {
   copyDir(join(SRC, 'commands'), join(out, 'commands'));
   copyDir(join(SRC, 'rules'), join(out, 'rules'));
   copyDir(ASSETS, join(out, 'assets'));
-  writeJson(join(out, 'mcp.json'), mcpConfigHosted(listing));
+  writeJson(join(out, 'mcp.json'), mcpConfigCursor(listing));
   writeFileSync(join(out, 'README.md'), pluginReadme(listing, 'Cursor'));
   copyText(join(ROOT, 'LICENSE'), join(out, 'LICENSE'));
 }
@@ -122,16 +163,19 @@ function buildClaude(listing) {
     name: listing.name,
     version: listing.version,
     description: listing.description,
+    displayName: listing.displayName,
     author: listing.author,
     homepage: listing.homepage,
     repository: listing.repository,
     license: listing.license,
     keywords: listing.keywords,
+    // External MCP — install disabled until user opts in (Claude Code >= 2.1.154)
+    defaultEnabled: false,
   });
   copyDir(join(SRC, 'skills', 'audiodn'), join(out, 'skills', 'audiodn'));
   copyDir(join(SRC, 'commands'), join(out, 'commands'));
   copyDir(ASSETS, join(out, 'assets'));
-  writeJson(join(out, '.mcp.json'), mcpConfigHosted(listing));
+  writeJson(join(out, '.mcp.json'), mcpConfigClaude(listing));
   writeFileSync(join(out, 'README.md'), pluginReadme(listing, 'Claude Code'));
   copyText(join(ROOT, 'LICENSE'), join(out, 'LICENSE'));
 }
@@ -143,17 +187,35 @@ function buildOpenai(listing) {
     name: listing.name,
     version: listing.version,
     description: listing.description,
-    author: listing.author.name,
+    author: {
+      name: listing.author.name,
+      url: listing.author.url,
+    },
     homepage: listing.homepage,
     repository: listing.repository,
     license: listing.license,
     keywords: listing.keywords,
     skills: './skills/',
     mcpServers: './.mcp.json',
+    interface: {
+      displayName: listing.displayName,
+      shortDescription: listing.shortDescription,
+      longDescription: listing.longDescription,
+      developerName: listing.author.name,
+      category: listing.category || 'Developer Tools',
+      capabilities: ['Read', 'Write'],
+      websiteURL: listing.canonical.website,
+      privacyPolicyURL: listing.canonical.privacy,
+      termsOfServiceURL: listing.canonical.terms,
+      defaultPrompt: listing.defaultPrompts,
+      brandColor: listing.brandColor,
+      logo: './assets/logo-square.png',
+      composerIcon: './assets/logo-square.png',
+    },
   });
   copyDir(join(SRC, 'skills', 'audiodn'), join(out, 'skills', 'audiodn'));
   copyDir(ASSETS, join(out, 'assets'));
-  writeJson(join(out, '.mcp.json'), mcpConfigHosted(listing));
+  writeJson(join(out, '.mcp.json'), mcpConfigOpenai(listing));
   writeFileSync(join(out, 'README.md'), pluginReadme(listing, 'OpenAI / Codex'));
   copyText(join(ROOT, 'LICENSE'), join(out, 'LICENSE'));
 }
@@ -177,7 +239,7 @@ function writeRootMarketplaces(listings) {
         repository: listings.cursor.repository,
         license: listings.cursor.license,
         keywords: listings.cursor.keywords,
-        logo: 'dist/cursor/assets/logo.png',
+        logo: 'dist/cursor/assets/logo-square.png',
         category: listings.cursor.category,
       },
     ],
@@ -196,6 +258,15 @@ function writeRootMarketplaces(listings) {
         source: './dist/claude',
         description: listings.claude.description,
         version: listings.claude.version,
+        displayName: listings.claude.displayName,
+        author: listings.claude.author,
+        homepage: listings.claude.homepage,
+        repository: listings.claude.repository,
+        license: listings.claude.license,
+        keywords: listings.claude.keywords,
+        category: 'development',
+        tags: listings.claude.keywords,
+        defaultEnabled: false,
       },
     ],
   });

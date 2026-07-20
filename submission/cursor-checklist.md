@@ -2,7 +2,9 @@
 
 ## Status
 
-**Ready after manual asset work** — bundle and manifests are prepared; screenshots still needed; submission is a manual form step.
+**Ready after manual asset work** — bundle and manifests are prepared; real product screenshots still needed; submission is a manual form step.
+
+QA notes (2026-07-19): square `logo-square.png` referenced; rule is opt-in; remote MCP uses Cursor `url` schema.
 
 ## Local installation test
 

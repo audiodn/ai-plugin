@@ -15,6 +15,7 @@ AudioDN MCP plus skills for secure audio infrastructure in coding agents.
 - Registry: `net.audiodelivery/mcp`
 - Local stdio: `npx -y @audiodn/mcp` with `ADN_API_KEY`
 - Knowledge/doc tools work without a key on the hosted server; live API tools need a Bearer API Access key.
+- Optional live-API auth: configure the hosted MCP Bearer key in the host credential UI (do not commit keys).
 
 ## Canonical resources
 

@@ -12,7 +12,33 @@
       "name": "audiodn",
       "source": "./dist/claude",
       "description": "AudioDN skills and MCP for secure audio upload, format standardization, and playback.",
-      "version": "1.0.0"
+      "version": "1.0.0",
+      "displayName": "AudioDN",
+      "author": {
+        "name": "AudioDN",
+        "url": "https://github.com/audiodn"
+      },
+      "homepage": "https://audiodeliverynetwork.com",
+      "repository": "https://github.com/audiodn/ai-plugin",
+      "license": "MIT",
+      "keywords": [
+        "audio",
+        "upload",
+        "playback",
+        "transcoding",
+        "mcp",
+        "audiodn"
+      ],
+      "category": "development",
+      "tags": [
+        "audio",
+        "upload",
+        "playback",
+        "transcoding",
+        "mcp",
+        "audiodn"
+      ],
+      "defaultEnabled": false
     }
   ]
 }

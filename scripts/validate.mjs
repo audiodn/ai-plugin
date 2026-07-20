@@ -120,14 +120,57 @@ for (const platform of ['cursor', 'claude', 'openai']) {
     if (rel.includes('..')) fail(`${platform}: path escapes root: ${rel}`);
   }
 
-  // MCP config
+  // MCP config — platform schemas differ
   const mcpPath =
     platform === 'cursor' ? join(base, 'mcp.json') : join(base, '.mcp.json');
   const mcp = readJson(mcpPath);
-  if (!mcp?.mcpServers?.audiodn) {
+  if (!mcp) {
+    fail(`${platform}: missing MCP config at ${relative(ROOT, mcpPath)}`);
+  } else if (platform === 'openai') {
+    // Codex: direct server map (or mcp_servers wrapper), not mcpServers
+    const entry = mcp.audiodn || mcp.mcp_servers?.audiodn;
+    if (!entry?.url) fail('openai: .mcp.json missing audiodn.url (direct map)');
+    else if (entry.url !== MCP_URL) fail(`openai: MCP url must be ${MCP_URL}`);
+    if (mcp.mcpServers) {
+      fail('openai: .mcp.json should be a direct server map, not mcpServers wrapper');
+    }
+  } else if (!mcp.mcpServers?.audiodn) {
     fail(`${platform}: missing mcpServers.audiodn`);
   } else if (mcp.mcpServers.audiodn.url !== MCP_URL) {
     fail(`${platform}: MCP url must be ${MCP_URL}`);
+  } else if (platform === 'claude') {
+    const t = mcp.mcpServers.audiodn.type;
+    if (t !== 'http' && t !== 'streamable-http') {
+      fail('claude: mcpServers.audiodn must set type to "http" (or streamable-http)');
+    }
+  }
+
+  // Platform-specific manifest extras
+  if (platform === 'claude') {
+    if (!man.displayName) fail('claude: plugin.json missing displayName');
+    if (man.defaultEnabled !== false) {
+      fail('claude: defaultEnabled should be false (external MCP opt-in)');
+    }
+  }
+  if (platform === 'openai') {
+    if (!man.interface?.displayName) fail('openai: missing interface.displayName');
+    if (!man.interface?.privacyPolicyURL) fail('openai: missing interface.privacyPolicyURL');
+    if (!man.interface?.termsOfServiceURL) fail('openai: missing interface.termsOfServiceURL');
+    if (!man.interface?.logo?.startsWith('./')) {
+      fail('openai: interface.logo must be a ./ relative path');
+    }
+    if (!Array.isArray(man.interface?.defaultPrompt) || man.interface.defaultPrompt.length < 1) {
+      fail('openai: interface.defaultPrompt should be a non-empty array');
+    }
+    for (const field of ['skills', 'mcpServers']) {
+      if (typeof man[field] === 'string' && !man[field].startsWith('./')) {
+        fail(`openai: ${field} path must start with ./`);
+      }
+    }
+  }
+  if (platform === 'cursor') {
+    if (!man.logo) fail('cursor: missing logo');
+    if (!existsSync(join(base, man.logo))) fail(`cursor: logo file missing: ${man.logo}`);
   }
 
   // skill frontmatter
@@ -136,6 +179,9 @@ for (const platform of ['cursor', 'claude', 'openai']) {
   else {
     const fm = parseFrontmatter(readFileSync(skill, 'utf8'));
     if (!fm?.name || !fm?.description) fail(`${platform}: skill frontmatter incomplete`);
+    if (typeof fm.description === 'string' && fm.description.length > 600) {
+      warn(`${platform}: skill description is long (${fm.description.length} chars)`);
+    }
   }
 }
 

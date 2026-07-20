@@ -9,9 +9,18 @@
   "homepage": "https://audiodeliverynetwork.com",
   "repository": "https://github.com/audiodn/ai-plugin",
   "license": "MIT",
-  "logo": "assets/logo.png",
+  "logo": "assets/logo-square.png",
+  "logoWide": "assets/logo.png",
   "shortDescription": "Build secure audio upload, format standardization, and playback with AudioDN.",
-  "description": "AudioDN skills, workflows, and MCP integration for coding agents. Helps agents design secure upload sessions, per-track uploads, processing readiness, variants, and playback without inventing endpoints or exposing server API keys.",
+  "description": "AudioDN skills, workflows, and MCP for coding agents: secure upload sessions, per-track uploads, variants, and playback without inventing endpoints or exposing server API keys.",
+  "longDescription": "AudioDN (Audio Delivery Network) is hosted audio infrastructure for coding agents. This plugin teaches the correct security boundaries and API sequences—upload session, per-track create, processing readiness, variants, and playback—and wires the hosted AudioDN MCP server for grounded docs plus optional live API tools. It is the AudioDN plugin for AI coding tools, not a separate product.",
+  "brandColor": "#5B8CFF",
+  "defaultPrompts": [
+    "Add a secure AudioDN upload flow without exposing server API keys.",
+    "Upload multiple tracks in one AudioDN upload session and wait until they are ready.",
+    "Add secure AudioDN playback to this existing web app.",
+    "Audit our AudioDN integration for missing per-track uploads and client-side server keys."
+  ],
   "keywords": [
     "audio",
     "upload",

@@ -1,7 +1,5 @@
 {
-  "mcpServers": {
-    "audiodn": {
-      "url": "https://mcp.audiodelivery.net/mcp"
-    }
+  "audiodn": {
+    "url": "https://mcp.audiodelivery.net/mcp"
   }
 }
