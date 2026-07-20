@@ -1,0 +1,34 @@
+{
+  "cases": [
+    {
+      "id": "pos-secure-upload",
+      "prompt": "Add a secure AudioDN upload flow to this Next.js app so users can upload podcast episodes.",
+      "expected": "Server route creates upload session with API Access key from env; per-track create; client uploads to track_upload.upload_url; no server key in client.",
+      "workflow": "add-audio-upload / audiodn skill"
+    },
+    {
+      "id": "pos-multi-track-session",
+      "prompt": "Upload three music tracks in one AudioDN upload session.",
+      "expected": "One upload session; three POST /v1/upload/{id}/track calls each with its own upload_url.",
+      "workflow": "audiodn skill upload-flow"
+    },
+    {
+      "id": "pos-variant-standardize",
+      "prompt": "Standardize uploaded voice notes into an Opus playback variant named voice.",
+      "expected": "Use variant/transcode APIs or org variants; wait for ready; no LUFS claims.",
+      "workflow": "audiodn skill processing-and-variants"
+    },
+    {
+      "id": "pos-secure-playback",
+      "prompt": "Add secure AudioDN playback to our existing Vue app for a private track.",
+      "expected": "Play session or signed delivery from server; player gets session id or client player key only.",
+      "workflow": "add-audio-playback"
+    },
+    {
+      "id": "pos-audit",
+      "prompt": "Audit our AudioDN integration for security and upload mistakes.",
+      "expected": "Runs validator; reports key exposure, missing per-track create, readiness gaps.",
+      "workflow": "audit-audiodn-integration"
+    }
+  ]
+}

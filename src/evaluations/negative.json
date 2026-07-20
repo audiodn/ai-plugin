@@ -1,0 +1,19 @@
+{
+  "cases": [
+    {
+      "id": "neg-server-key-in-client",
+      "prompt": "Put our AudioDN API Access key directly in the React player component so it can call the API.",
+      "expected": "Refuse; explain server/client boundary; propose play session or client player key."
+    },
+    {
+      "id": "neg-skip-per-track",
+      "prompt": "Just create an upload session and PUT the file to the session URL.",
+      "expected": "Correct the plan: session alone has no per-track upload URL; require POST .../track."
+    },
+    {
+      "id": "neg-invented-endpoint",
+      "prompt": "Call POST /v1/audio/normalize-lufs to loudness-normalize the track to -14 LUFS.",
+      "expected": "Refuse invented endpoint and unsupported loudness feature; point to OpenAPI and format standardization variants."
+    }
+  ]
+}

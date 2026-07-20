@@ -1,0 +1,15 @@
+{
+  "extends": "shared.json",
+  "name": "audiodn",
+  "description": "AudioDN integration skill, upload/playback workflows, and hosted MCP for Cursor agents.",
+  "keywords": [
+    "audio",
+    "upload",
+    "playback",
+    "transcoding",
+    "mcp",
+    "audiodn",
+    "cdn"
+  ],
+  "category": "Developer Tools"
+}

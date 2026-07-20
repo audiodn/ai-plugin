@@ -1,0 +1,15 @@
+{
+  "extends": "shared.json",
+  "name": "audiodn",
+  "description": "AudioDN MCP plus skills for secure audio infrastructure in coding agents.",
+  "category": "Developer Tools",
+  "keywords": [
+    "audio",
+    "upload",
+    "playback",
+    "transcoding",
+    "mcp",
+    "audiodn",
+    "codex"
+  ]
+}

@@ -1,0 +1,16 @@
+---
+description: AudioDN integration guardrails — secure keys, upload session vs per-track URL, OpenAPI verification, no loudness-normalization claims
+alwaysApply: false
+---
+
+# AudioDN
+
+When working with AudioDN uploads, processing, or playback:
+
+- Keep API Access keys server-side only.
+- Creating an upload session does not itself return the final upload URL for each track. Each track requires its own track-creation request (`POST /v1/upload/{upload_session_id}/track`).
+- Verify unfamiliar endpoints against https://audiodeliverynetwork.com/openapi.json
+- Wait for processing readiness before playback.
+- Do not claim LUFS/loudness normalization; use format standardization / transcoding language.
+- Do not log Authorization headers or API keys.
+- Prefer the `audiodn` skill and hosted MCP knowledge tools over inventing API shapes.

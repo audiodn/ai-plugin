@@ -1,0 +1,45 @@
+{
+  "name": "audiodn",
+  "displayName": "AudioDN",
+  "version": "1.0.0",
+  "author": {
+    "name": "AudioDN",
+    "url": "https://github.com/audiodn"
+  },
+  "homepage": "https://audiodeliverynetwork.com",
+  "repository": "https://github.com/audiodn/ai-plugin",
+  "license": "MIT",
+  "logo": "assets/logo.png",
+  "shortDescription": "Build secure audio upload, format standardization, and playback with AudioDN.",
+  "description": "AudioDN skills, workflows, and MCP integration for coding agents. Helps agents design secure upload sessions, per-track uploads, processing readiness, variants, and playback without inventing endpoints or exposing server API keys.",
+  "keywords": [
+    "audio",
+    "upload",
+    "transcoding",
+    "streaming",
+    "playback",
+    "podcast",
+    "music",
+    "cdn",
+    "mcp",
+    "audiodn"
+  ],
+  "category": "Developer Tools",
+  "mcp": {
+    "registryName": "net.audiodelivery/mcp",
+    "hostedUrl": "https://mcp.audiodelivery.net/mcp",
+    "npmPackage": "@audiodn/mcp",
+    "stdioCommand": ["npx", "-y", "@audiodn/mcp"]
+  },
+  "canonical": {
+    "website": "https://audiodeliverynetwork.com",
+    "docs": "https://audiodeliverynetwork.com/docs/",
+    "forAiAgents": "https://audiodeliverynetwork.com/for-ai-agents/",
+    "openapi": "https://audiodeliverynetwork.com/openapi.json",
+    "apiOrigin": "https://api.audiodelivery.net",
+    "privacy": "https://audiodeliverynetwork.com/privacy",
+    "terms": "https://audiodeliverynetwork.com/terms",
+    "support": "https://audiodeliverynetwork.com/for-ai-agents/",
+    "account": "https://account.audiodeliverynetwork.com"
+  }
+}

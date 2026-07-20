@@ -1,0 +1,13 @@
+{
+  "extends": "shared.json",
+  "name": "audiodn",
+  "description": "AudioDN skills and MCP for secure audio upload, format standardization, and playback.",
+  "keywords": [
+    "audio",
+    "upload",
+    "playback",
+    "transcoding",
+    "mcp",
+    "audiodn"
+  ]
+}

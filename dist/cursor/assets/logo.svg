@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="AudioDN">
+  <rect width="128" height="128" rx="24" fill="#0B1220"/>
+  <path d="M34 78V50c0-2.2 1.8-4 4-4h8c2.2 0 4 1.8 4 4v28c0 2.2-1.8 4-4 4h-8c-2.2 0-4-1.8-4-4z" fill="#5B8CFF"/>
+  <path d="M54 88V40c0-2.2 1.8-4 4-4h8c2.2 0 4 1.8 4 4v48c0 2.2-1.8 4-4 4h-8c-2.2 0-4-1.8-4-4z" fill="#7AA2FF"/>
+  <path d="M74 70V58c0-2.2 1.8-4 4-4h8c2.2 0 4 1.8 4 4v12c0 2.2-1.8 4-4 4h-8c-2.2 0-4-1.8-4-4z" fill="#A8C0FF"/>
+  <circle cx="96" cy="40" r="10" fill="#FF6B4A"/>
+</svg>

@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Validate
+        run: npm run validate
+
+      - name: OpenAPI audit
+        run: npm run validate:openapi
+
+      - name: MCP audit
+        run: npm run validate:mcp
+
+      - name: Check links
+        run: npm run check:links
+
+      - name: Test
+        run: npm test
+
+      - name: Secret scan (pattern)
+        run: |
+          if grep -RInE --exclude-dir=assets --exclude-dir=.git --exclude-dir=node_modules \
+            'adn_[a-z]+_[A-Za-z0-9]{16,}|Bearer[[:space:]]+adn_[A-Za-z0-9_]{16,}' . ; then
+            echo "Possible committed API key material" >&2
+            exit 1
+          fi
+          echo "secret scan: ok"
+
+      - name: Ensure dist is committed (no drift)
+        run: |
+          git status --porcelain dist .cursor-plugin .claude-plugin .agents
+          if [ -n "$(git status --porcelain dist .cursor-plugin .claude-plugin .agents)" ]; then
+            echo "Generated files dirty after build — commit npm run build output" >&2
+            git diff --stat
+            exit 1
+          fi
+          echo "dist clean: ok"

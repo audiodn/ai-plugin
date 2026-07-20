@@ -1,0 +1,265 @@
+{
+  "auditedAt": "2026-07-20T02:05:39.012Z",
+  "hostedUrl": "https://mcp.audiodelivery.net/mcp",
+  "registryName": "net.audiodelivery/mcp",
+  "npmPackage": "@audiodn/mcp",
+  "localTypesPath": "/Users/gdbate/dev/audiodn/audiodn-mono/mcp/src/tools/types.ts",
+  "writePresetHasDestructiveFalse": false,
+  "toolCount": 24,
+  "openaiBlockers": [
+    "adn_create_creator",
+    "adn_create_collection",
+    "adn_create_upload_session",
+    "adn_create_track_in_upload_session",
+    "adn_create_play_session",
+    "adn_update_creator",
+    "adn_update_collection"
+  ],
+  "tools": [
+    {
+      "name": "adn_about",
+      "kind": "knowledge",
+      "readOnlyHint": true,
+      "openWorldHint": false,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ]
+    },
+    {
+      "name": "adn_search_docs",
+      "kind": "knowledge",
+      "readOnlyHint": true,
+      "openWorldHint": false,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ]
+    },
+    {
+      "name": "adn_list_operations",
+      "kind": "knowledge",
+      "readOnlyHint": true,
+      "openWorldHint": false,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ]
+    },
+    {
+      "name": "adn_get_operation",
+      "kind": "knowledge",
+      "readOnlyHint": true,
+      "openWorldHint": false,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ]
+    },
+    {
+      "name": "adn_get_guide",
+      "kind": "knowledge",
+      "readOnlyHint": true,
+      "openWorldHint": false,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ]
+    },
+    {
+      "name": "adn_list_variant_types",
+      "kind": "knowledge",
+      "readOnlyHint": true,
+      "openWorldHint": false,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ]
+    },
+    {
+      "name": "adn_list_creators",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ]
+    },
+    {
+      "name": "adn_get_creator",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ]
+    },
+    {
+      "name": "adn_list_collections",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ]
+    },
+    {
+      "name": "adn_get_collection",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ]
+    },
+    {
+      "name": "adn_list_tracks",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ]
+    },
+    {
+      "name": "adn_get_track",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ]
+    },
+    {
+      "name": "adn_get_upload_session",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ]
+    },
+    {
+      "name": "adn_get_play_session",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ]
+    },
+    {
+      "name": "adn_list_variants",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ]
+    },
+    {
+      "name": "adn_create_creator",
+      "kind": "write",
+      "readOnlyHint": false,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ],
+      "blocker": true
+    },
+    {
+      "name": "adn_create_collection",
+      "kind": "write",
+      "readOnlyHint": false,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ],
+      "blocker": true
+    },
+    {
+      "name": "adn_create_upload_session",
+      "kind": "write",
+      "readOnlyHint": false,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ],
+      "blocker": true
+    },
+    {
+      "name": "adn_create_track_in_upload_session",
+      "kind": "write",
+      "readOnlyHint": false,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ],
+      "blocker": true
+    },
+    {
+      "name": "adn_create_play_session",
+      "kind": "write",
+      "readOnlyHint": false,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ],
+      "blocker": true
+    },
+    {
+      "name": "adn_update_creator",
+      "kind": "write-idempotent",
+      "readOnlyHint": false,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ],
+      "blocker": true
+    },
+    {
+      "name": "adn_update_collection",
+      "kind": "write-idempotent",
+      "readOnlyHint": false,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [
+        "destructiveHint"
+      ],
+      "blocker": true
+    },
+    {
+      "name": "adn_delete_creator",
+      "kind": "destructive",
+      "readOnlyHint": false,
+      "openWorldHint": true,
+      "destructiveHint": true,
+      "missing": [],
+      "gated": true
+    },
+    {
+      "name": "adn_delete_collection",
+      "kind": "destructive",
+      "readOnlyHint": false,
+      "openWorldHint": true,
+      "destructiveHint": true,
+      "missing": [],
+      "gated": true
+    }
+  ]
+}

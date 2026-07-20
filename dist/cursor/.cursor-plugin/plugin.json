@@ -1,0 +1,22 @@
+{
+  "name": "audiodn",
+  "version": "1.0.0",
+  "description": "AudioDN integration skill, upload/playback workflows, and hosted MCP for Cursor agents.",
+  "author": {
+    "name": "AudioDN",
+    "url": "https://github.com/audiodn"
+  },
+  "homepage": "https://audiodeliverynetwork.com",
+  "repository": "https://github.com/audiodn/ai-plugin",
+  "license": "MIT",
+  "keywords": [
+    "audio",
+    "upload",
+    "playback",
+    "transcoding",
+    "mcp",
+    "audiodn",
+    "cdn"
+  ],
+  "logo": "assets/logo.png"
+}
