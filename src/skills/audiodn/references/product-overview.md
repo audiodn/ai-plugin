@@ -17,8 +17,9 @@ sessions or signed URLs. It is operated by Audio Delivery Network.
 ## Pricing model (product guidance)
 
 Public product messaging: storage-based pricing, free processing, unlimited
-plays, no egress fees. Confirm current details on the website before quoting
-numbers to users.
+plays, no egress fees. Maximum track lengths are **20 / 45 / 80 minutes**
+(Creator / Business / Platform & Enterprise). Confirm current details on
+https://audiodeliverynetwork.com/pricing before quoting other numbers.
 
 ## Hosts (do not confuse)
 
