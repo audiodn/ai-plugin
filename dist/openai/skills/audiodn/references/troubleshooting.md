@@ -11,6 +11,8 @@
 | Client bundle contains Bearer | Move API Access usage to the server |
 | `/v1/` on marketing host | Use `https://api.audiodelivery.net` |
 | Invented endpoint | Check OpenAPI before generating unfamiliar calls |
+| Component has both `api-key` and a session id | Pick one path per component: Client-Side `api-key` (Web) or `play-session-id`/`upload-session-id` (Hybrid) |
+| Signed URL passed to `<audiodn-player>` | Player takes only a client key or `play-session-id`; use native `<audio>` for signed delivery |
 | “Normalize loudness” request | Decline; offer format standardization via variants instead |
 
 ## Security reminders

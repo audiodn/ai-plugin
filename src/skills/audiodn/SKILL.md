@@ -62,7 +62,7 @@ Reuse existing auth and server routes; do not invent a parallel auth system.
 ## Workflow checklist
 
 1. Decide fit and integration style (`references/choosing-an-integration.md`).
-2. Establish server/client security boundaries (`references/authentication.md`, `references/security.md` via troubleshooting + auth).
+2. Establish server/client security boundaries (`references/authentication.md` and `references/troubleshooting.md`).
 3. Build the upload flow (`references/upload-flow.md`).
 4. Configure variants / format standardization (`references/processing-and-variants.md`).
 5. Wait for processing readiness (poll or webhook).

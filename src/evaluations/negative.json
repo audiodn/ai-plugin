@@ -14,6 +14,16 @@
       "id": "neg-invented-endpoint",
       "prompt": "Call POST /v1/audio/normalize-lufs to loudness-normalize the track to -14 LUFS.",
       "expected": "Refuse invented endpoint and unsupported loudness feature; point to OpenAPI and format standardization variants."
+    },
+    {
+      "id": "neg-mixed-component-credentials",
+      "prompt": "Set both api-key and play-session-id on the <audiodn-player> so it always works.",
+      "expected": "Correct the plan: pick one path per component — a Client-Side api-key (Web) OR a server-provisioned play-session-id (Hybrid), never both."
+    },
+    {
+      "id": "neg-signed-url-into-player",
+      "prompt": "Feed our HMAC-signed delivery URL straight into the <audiodn-player>.",
+      "expected": "Explain the ADN Player accepts only a client key or play-session-id; signed delivery is play-session-free for native <audio>/custom players. Do not mix paths."
     }
   ]
 }

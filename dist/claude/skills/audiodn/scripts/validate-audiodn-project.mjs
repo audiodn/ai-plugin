@@ -193,6 +193,27 @@ function ruleFindings(file, relPath, content, known, config) {
     }
   });
 
+  // 9. mixed-component-credentials (path-mixing) — a component tag may span
+  //    multiple lines, so scan the whole file. Setting both a client-side
+  //    api-key and a server-provisioned session id blends two integration paths.
+  const TAG = /<audiodn-(player|uploader)\b[^>]*>/gis;
+  let tm;
+  while ((tm = TAG.exec(content)) !== null) {
+    const tag = tm[0];
+    const hasKey = /\bapi-key\s*=/i.test(tag);
+    const hasSession = /\b(play-session-id|upload-session-id)\s*=/i.test(tag);
+    if (hasKey && hasSession) {
+      const lineIdx = content.slice(0, tm.index).split('\n').length - 1;
+      add(
+        'mixed-component-credentials',
+        'error',
+        lineIdx,
+        'AudioDN component sets both api-key and a session id (mixed integration paths).',
+        'Use one path per component: a Client-Side api-key (Web) OR a play/upload-session-id (Hybrid) — not both.',
+      );
+    }
+  }
+
   return findings;
 }
 

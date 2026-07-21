@@ -29,6 +29,18 @@
       "prompt": "Audit our AudioDN integration for security and upload mistakes.",
       "expected": "Runs validator; reports key exposure, missing per-track create, readiness gaps.",
       "workflow": "audit-audiodn-integration"
+    },
+    {
+      "id": "pos-path-selection",
+      "prompt": "We have a Node backend and a paywalled React app. What AudioDN integration path should we use for playback?",
+      "expected": "Recommends the Hybrid path: server mints play sessions with the API Access key (entitlement checks), passes play-session-id to <audiodn-player>; client never holds a key. One path per surface.",
+      "workflow": "audiodn skill choosing-an-integration"
+    },
+    {
+      "id": "pos-mobile-client-session",
+      "prompt": "Play tracks in our iOS app directly from AudioDN.",
+      "expected": "Mobile path: a scoped Client-Side Player key creates the play session in-app, then the session id fetches signed variant URLs for a native player. Client-side key is acceptable; the API Access key stays off-device.",
+      "workflow": "audiodn skill choosing-an-integration"
     }
   ]
 }
