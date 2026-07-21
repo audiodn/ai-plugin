@@ -13,10 +13,10 @@ description: Scaffold or extend a site with AudioDN-backed upload and playback (
 
 ## Implement
 
-1. Decide fit (`skills/audiodn/references/choosing-an-integration.md`).
+1. Decide fit and pick one integration path (`skills/audiodn/references/choosing-an-integration.md`); guided steps in `skills/audiodn/references/workflows.md`.
 2. Add upload path (per-track create required).
-3. Add processing readiness gate.
-4. Add playback via play session or components.
+3. Add processing readiness gate (poll or webhook — `skills/audiodn/references/webhooks.md`).
+4. Add playback via play session or components, staying on the chosen path.
 5. Link to canonical docs rather than pasting large doc sections.
 
 Do not claim loudness/LUFS normalization. Describe format standardization via variants.

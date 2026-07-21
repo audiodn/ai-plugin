@@ -22,9 +22,28 @@ The upload lifecycle is multi-step. A session alone uploads nothing.
 4. **Upload bytes** to that URL using `track_upload.method` (typically `PUT`).  
    The URL is short-lived and single-use — do not store it in a database or config.
 
-5. **Wait for processing readiness** — poll `GET /v1/track/{track_id}` (Bearer) until a terminal status, or use the Track Processing webhook.
+5. **Wait for processing readiness** — poll `GET /v1/track/{track_id}` (Bearer) until a terminal status, or use the Track Processing webhook (preferred in production; see `references/webhooks.md`).
 
 6. **Request playback or delivery** only after the required variant/track file is ready.
+
+## Persist the IDs (link uploads to playback)
+
+The upload returns **durable** handles — store these in your database and treat
+them as the long-lived reference to the audio:
+
+- `track_id` — the durable ID for one track.
+- `collection_id` — the durable grouping the track belongs to.
+- variant delivery `index` (e.g. `hq`, `lq`) — the durable variant selector.
+
+Later, create a play session (or sign a delivery URL) from the stored
+`track_id` / `collection_id` to play or download — that is how an upload links to
+playback.
+
+Do **not** store these **ephemeral** values; re-request them when needed:
+
+- `track_upload.upload_url` (short-lived, single-use)
+- `upload_session_id` / `play_session_id` (short-lived capability tokens)
+- signed delivery URLs (expire on the signature TTL)
 
 ## Optional convenience (first file only)
 

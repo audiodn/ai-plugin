@@ -15,6 +15,7 @@ immediately playable.
 - **Webhook** (preferred in production): Track Processing webhook fires on
   terminal outcomes / when the file set completes (`files_completed_at`), not on
   every transitional status. Dashboard-configured; header `X-ADN-Event: track.status_changed`.
+  See `references/webhooks.md` for all three webhooks (processing, track files, collection sync).
 
 Do not assume a just-uploaded track is ready. The uploader component’s
 `file-uploaded` event means bytes were stored — not that processing finished.

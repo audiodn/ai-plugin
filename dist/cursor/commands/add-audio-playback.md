@@ -14,11 +14,13 @@ description: Add secure AudioDN playback or delivery to the current project (ins
 ## Implement
 
 Follow `skills/audiodn/references/playback-and-delivery.md` and
-`skills/audiodn/references/web-components.md`:
+`skills/audiodn/references/web-components.md` (pick one path:
+`skills/audiodn/references/choosing-an-integration.md`; guided steps:
+`skills/audiodn/references/workflows.md`):
 
 1. Ensure processing readiness first.
-2. Server creates `POST /v1/play_session/{scope}` with required `variants` array, **or** signs delivery URLs server-side.
-3. Pass `play-session-id` or a Client-Side Player key to the player — not a server key.
+2. Create `POST /v1/play_session/{scope}` with the required `variants` array (API Access key server-side, or a scoped Client-Side key in-client), **or** sign delivery URLs server-side.
+3. Pass `play-session-id` **or** a Client-Side Player key to the player — never both, never an API Access key.
 
 ## After editing
 
