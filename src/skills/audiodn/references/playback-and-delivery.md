@@ -37,6 +37,12 @@ the client. This path skips play sessions entirely — do not also mint a play
 session for the same stream, and do not feed signed URLs to the ADN Player
 (the player accepts only a client key or `play-session-id`).
 
+Build the URL to sign from the `track.base_url` returned by every
+track-creation response (a durable prefix on the organization's unique
+`audiodelivery.net` subdomain): append the variant suffix and extension, e.g.
+`{base_url}_128.mp3`, then sign. `track.base_path` is the same prefix without
+the host, for when you construct the host yourself.
+
 ## Inline share
 
 Documented separately: stream via share key path on the API host (302). Prefer

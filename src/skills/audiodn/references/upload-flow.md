@@ -13,8 +13,13 @@ The upload lifecycle is multi-step. A session alone uploads nothing.
 
 2. **Create a separate track inside that upload session** (no Bearer — session ID is the credential)  
    `POST /v1/upload/{upload_session_id}/track`  
-   Body includes `file_name` (and related track fields as documented).  
-   Returns `track_id` and `track_upload` with `method`, `upload_url`, TTL/expiry.
+   Body includes `file_name` (and optionally `organization_index`, `metadata`,
+   `player_title`, `player_subtitle`, `player_color`, `is_cover_overridable`,
+   `is_theme_overridable` — the same track fields as `POST /v1/track`).  
+   Returns `track_id`, the full `track` object (including `track.base_path` and
+   `track.base_url`), and `track_upload` with `method`, `upload_url`, TTL/expiry.
+   All three track creators (`POST /v1/track`, the nested `track` on
+   `POST /v1/upload_session`, and this endpoint) return the same `track` shape.
 
 3. **Receive the track-specific upload URL** from that track-creation response  
    (`track_upload.upload_url`). Do this once per file.
@@ -34,6 +39,11 @@ them as the long-lived reference to the audio:
 - `track_id` — the durable ID for one track.
 - `collection_id` — the durable grouping the track belongs to.
 - variant delivery `index` (e.g. `hq`, `lq`) — the durable variant selector.
+- `track.base_path` / `track.base_url` — the durable delivery prefix for the
+  track's variant files. Each variant file is that prefix plus a variant suffix
+  and extension (e.g. `{base_url}_128.mp3`). `base_url` is `base_path` served
+  from the organization's unique `audiodelivery.net` subdomain — store it if you
+  use signed delivery, then HMAC-sign the resulting URLs. Never upload to it.
 
 Later, create a play session (or sign a delivery URL) from the stored
 `track_id` / `collection_id` to play or download — that is how an upload links to
@@ -47,8 +57,9 @@ Do **not** store these **ephemeral** values; re-request them when needed:
 
 ## Optional convenience (first file only)
 
-OpenAPI allows an optional nested `track` object on `POST /v1/upload_session`,
-which may return a first-file `track_upload`. That does **not** replace the rule
+OpenAPI allows an optional nested `track` object on `POST /v1/upload_session`
+(same fields as the per-track request), which returns the same first-file
+`track`/`track_upload` response fields. That does **not** replace the rule
 above for multi-track uploads: every additional track still needs
 `POST /v1/upload/{upload_session_id}/track`. Prefer teaching the explicit
 per-track request so agents never skip step 2.
