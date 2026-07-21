@@ -7,9 +7,9 @@ description: Audit an existing AudioDN integration for security and flow correct
 
 ## Inspect
 
-1. Scan for API Access keys in client/mobile/`public` code.
+1. Scan for API Access keys in client/mobile/`public` code (scoped Client-Side keys and session IDs are fine client-side).
 2. Confirm upload uses session + per-track create + short-lived `upload_url`.
-3. Confirm playback waits for readiness.
+3. Confirm playback waits for readiness and stays on one integration path — no mixed credentials (both `api-key` and a session ID), no signed URLs fed to the ADN Player (`skills/audiodn/references/choosing-an-integration.md`).
 4. Confirm API host is `api.audiodelivery.net` for `/v1/`.
 5. Confirm no invented endpoints; spot-check against OpenAPI.
 6. Confirm secrets are not logged.

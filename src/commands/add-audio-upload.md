@@ -13,12 +13,15 @@ description: Add a secure AudioDN upload flow to the current project (inspect-fi
 
 ## Implement
 
-Follow `skills/audiodn/references/upload-flow.md`:
+Follow `skills/audiodn/references/upload-flow.md` (path selection:
+`skills/audiodn/references/choosing-an-integration.md`; guided steps:
+`skills/audiodn/references/workflows.md`):
 
-1. Server creates `POST /v1/upload_session` with Bearer API Access key from env.
-2. For each file, create a track via `POST /v1/upload/{upload_session_id}/track`.
-3. Client or server PUTs bytes to `track_upload.upload_url`.
-4. Document readiness polling/webhook before playback.
+1. Create the collection if needed (`POST /v1/collection`) and store `collection_id` (`skills/audiodn/references/reading-catalog.md`).
+2. Create `POST /v1/upload_session` with a Bearer key (API Access server-side, or a scoped Client-Side key in-client).
+3. For each file, create a track via `POST /v1/upload/{upload_session_id}/track`.
+4. Client or server PUTs bytes to `track_upload.upload_url`; persist the returned `track_id`.
+5. Document readiness polling/webhook before playback (`skills/audiodn/references/webhooks.md`).
 
 Creating an upload session does not itself return the final upload URL for each
 track. Each track requires its own track-creation request.
