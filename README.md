@@ -16,7 +16,7 @@ This repository is the public **AudioDN plugin**, not a separate AudioDN product
 
 | Package | Role |
 |---------|------|
-| **This plugin** (`audiodn/ai-plugin`) | Marketplace skills + workflows + MCP config for AI coding tools |
+| **This plugin** ([`@audiodn/ai-plugin`](https://www.npmjs.com/package/@audiodn/ai-plugin)) | Marketplace skills + workflows + MCP config for AI coding tools |
 | [`@audiodn/mcp`](https://www.npmjs.com/package/@audiodn/mcp) | MCP server (hosted HTTP or local stdio) exposing docs + optional live API tools |
 | [`@audiodn/agent-kit`](https://www.npmjs.com/package/@audiodn/agent-kit) | CLI that installs guidance files into an application repo |
 
@@ -94,7 +94,14 @@ npm run check:links
 
 ## Versioning
 
-Semver in `package.json` (`private: true` — this repo is not published to npm). Bump version when shipping marketplace updates; rebuild and commit `dist/`.
+Semver in `package.json`. Bump the version when shipping marketplace updates, rebuild and commit `dist/`, then publish:
+
+```bash
+npm run ci          # build + validate + audits + tests
+npm publish         # scoped public; runs prepublishOnly (build + validate + test)
+```
+
+The published tarball contains only the platform bundles (`dist/`), `README.md`, `LICENSE`, and `CHANGELOG.md` — source, scripts, tests, and `submission/` are excluded via the `files` allowlist.
 
 ## License
 

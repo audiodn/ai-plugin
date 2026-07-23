@@ -8,9 +8,19 @@ import { spawnSync } from 'node:child_process';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 describe('ai-plugin', () => {
-  it('has private package.json', () => {
+  it('is configured for a clean scoped public npm publish', () => {
     const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'));
-    assert.equal(pkg.private, true);
+    // Published as a public scoped package (not private).
+    assert.notEqual(pkg.private, true);
+    assert.equal(pkg.publishConfig?.access, 'public');
+    // Tarball ships only the built bundles + docs — never source, tests, or
+    // the submission/ working files.
+    assert.deepEqual(pkg.files, ['dist', 'README.md', 'LICENSE', 'CHANGELOG.md']);
+    for (const leak of ['src', 'scripts', 'test', 'submission', 'sync-review']) {
+      assert.ok(!pkg.files.includes(leak), `files must not include ${leak}`);
+    }
+    // A build+validate gate runs before anything is published.
+    assert.ok(pkg.scripts?.prepublishOnly?.includes('build'));
   });
 
   it('ships required upload sentence in all platform skills', () => {

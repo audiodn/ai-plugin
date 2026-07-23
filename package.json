@@ -1,10 +1,18 @@
 {
   "name": "@audiodn/ai-plugin",
   "version": "1.0.0",
-  "private": true,
   "description": "AudioDN skills, workflows, and MCP integration for AI coding tools (Cursor, Claude Code, OpenAI/Codex)",
   "type": "module",
   "license": "MIT",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "author": {
     "name": "AudioDN",
     "url": "https://github.com/audiodn"
@@ -28,7 +36,8 @@
     "check:links": "node scripts/check-links.mjs",
     "sync": "node scripts/sync-audiodn-sources.mjs",
     "test": "node --test test/*.test.mjs",
-    "ci": "npm run validate && npm run build && npm run validate:openapi && npm run validate:mcp && npm run check:links && npm test"
+    "ci": "npm run validate && npm run build && npm run validate:openapi && npm run validate:mcp && npm run check:links && npm test",
+    "prepublishOnly": "npm run build && npm run validate && npm test"
   },
   "keywords": [
     "audiodn",
