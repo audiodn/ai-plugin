@@ -11,7 +11,7 @@ sessions or signed URLs. It is operated by Audio Delivery Network.
 - Org-defined variants (transcode recipes, previews, analysis assets)
 - Play sessions with signed, time-gated variant URLs
 - Optional HMAC URL signing for public/entitled delivery
-- Web components: player, uploader, waveform
+- Web components: player, uploader, (voice) recorder, waveform
 - MCP server for agent-assisted development and optional live API tools
 
 ## Pricing model (product guidance)

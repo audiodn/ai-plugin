@@ -49,17 +49,28 @@ Later, create a play session (or sign a delivery URL) from the stored
 `track_id` / `collection_id` to play or download — that is how an upload links to
 playback.
 
+### Client-side uploads: notify your server
+
+When bytes are uploaded from the browser / app (a Client-Side Upload key or the
+Uploader / Recorder component), the durable IDs first exist on the client. Relay
+them to your server on success — the component's `file-uploaded` event carries the
+`trackId`. Persist `track_id` (and, if you plan to sign delivery URLs later, the
+stored `track.base_url` / `base_path`). Do not treat the client `file-uploaded`
+signal as "ready"; still gate playback on processing readiness.
+
 Do **not** store these **ephemeral** values; re-request them when needed:
 
 - `track_upload.upload_url` (short-lived, single-use)
 - `upload_session_id` / `play_session_id` (short-lived capability tokens)
 - signed delivery URLs (expire on the signature TTL)
 
-## Optional convenience (first file only)
+## Optional convenience (single-file / first file)
 
 OpenAPI allows an optional nested `track` object on `POST /v1/upload_session`
 (same fields as the per-track request), which returns the same first-file
-`track`/`track_upload` response fields. That does **not** replace the rule
+`track`/`track_upload` response fields in one request. This is ideal for
+**single-file** uploads (e.g. the voice Recorder component, which uses it to
+create the session and track in one call). It does **not** replace the rule
 above for multi-track uploads: every additional track still needs
 `POST /v1/upload/{upload_session_id}/track`. Prefer teaching the explicit
 per-track request so agents never skip step 2.

@@ -1,14 +1,19 @@
 # Playback and delivery
 
-Gate all delivery on processing readiness. Choose one integration path
-(`references/choosing-an-integration.md`) and keep the surface consistent.
+Gate all delivery on processing readiness. Pick one playback terminal per surface
+(`references/choosing-an-integration.md`) and keep it consistent.
+
+Consumers are broad: the ADN Player component, a custom web/native player,
+**downloads**, or a **programmatic / non-visual** consumer (e.g. telephony /
+answering-machine playback). A server-created session returns signed variant URLs
+any of these can use.
 
 ## Play sessions (per-listener)
 
 `POST /v1/play_session/{scope}`, scope `track` or `collection` (`playlist` is
 reserved and returns 400). Authorized by a **Bearer** key that is **either** an
-API Access key server-side (Server-side / Hybrid) **or** a scoped Client-Side
-Player key in-client (Mobile):
+API Access key on the server **or** a scoped Client-Side Player key used
+in-client (the two calls look nearly identical; only the key differs):
 
 - Body must include a non-empty `variants` array (OpenAPI), plus `track_id` or
   `collection_id`, optional `expires_in` (seconds; default 3600, min 60, max
@@ -31,11 +36,13 @@ Downloads require a session created with `is_downloadable: true`.
 
 ## Signed delivery (public / entitled)
 
-Sign delivery URLs on your server or edge with a URL Signing key (HMAC-SHA256).
-Append the `verify` query parameter **last**. The signing secret never goes to
-the client. This path skips play sessions entirely — do not also mint a play
-session for the same stream, and do not feed signed URLs to the ADN Player
-(the player accepts only a client key or `play-session-id`).
+Sign delivery URLs on your server or edge with a URL Signing key (HMAC-SHA256),
+bypassing play sessions and the ADN round trip at play time. Append the `verify`
+query parameter **last**. The signing secret never goes to the client. Deliver the
+signed URL to the client directly or via a server redirect. This skips play
+sessions entirely — do not also mint a play session for the same stream, and do
+not feed signed URLs to the ADN Player (the player accepts only a client key or
+`play-session-id`).
 
 Build the URL to sign from the `track.base_url` returned by every
 track-creation response (a durable prefix on the organization's unique
@@ -50,10 +57,10 @@ OpenAPI + share docs; do not invent paths.
 
 ## Components
 
-Pass a Client-Side Player key (Web path) **or** a server-provisioned
-`play-session-id` (Hybrid path) to `<audiodn-player>` — never both, and never an
-API Access key. See `references/web-components.md`.
+Pass a Client-Side Player key **or** a server-provisioned `play-session-id` to
+`<audiodn-player>` — never both, and never an API Access key. See
+`references/web-components.md`.
 
 Canonical: https://audiodeliverynetwork.com/docs/api/play-sessions and
-https://audiodeliverynetwork.com/docs/integration/signed-delivery
+https://audiodeliverynetwork.com/docs/integration/playback?playback=signed-delivery
 OpenAPI: `createPlaySession`, `getPlayTrack`, `downloadPlayTrackVariant`.

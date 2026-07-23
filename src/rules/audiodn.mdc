@@ -8,7 +8,7 @@ alwaysApply: false
 When working with AudioDN uploads, processing, or playback:
 
 - Keep API Access keys server-side only. Play/upload sessions may be created by an API Access key server-side OR a scoped Client-Side key in-client; the invariant is that the API Access key never reaches a client.
-- Pick one integration path per surface (Web, Mobile, Server-side, Hybrid, Signed delivery). Do not mix credentials/flows: never set both `api-key` and a session ID on a component, and do not feed signed URLs to the ADN Player.
+- Treat uploading and playback as two independent tasks; pick one terminal per task per surface. Do not mix credentials/flows: never set both `api-key` and a session ID on a component, and do not feed signed URLs to the ADN Player.
 - Persist durable IDs (`collection_id`, `track_id`, variant delivery `index`) to link uploads to playback; never store ephemeral values (`upload_url`, session IDs, signed URLs).
 - Creating an upload session does not itself return the final upload URL for each track. Each track requires its own track-creation request (`POST /v1/upload/{upload_session_id}/track`).
 - Verify unfamiliar endpoints against https://audiodeliverynetwork.com/openapi.json

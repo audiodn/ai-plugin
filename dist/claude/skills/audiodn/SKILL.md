@@ -31,10 +31,10 @@ validator before finishing.
 8. Persist the **durable** IDs (`collection_id`, `track_id`, variant delivery
    `index`) to link uploads to playback. Never store **ephemeral** values
    (`upload_url`, session IDs, signed URLs) — re-request them.
-9. Pick exactly one integration path per surface (Web, Mobile, Server-side,
-   Hybrid, or Signed delivery) and keep it consistent. Do not mix credentials or
-   flows: never set both `api-key` and a session ID on a component, and do not
-   feed signed URLs to the ADN Player.
+9. Treat uploading and playback as two independent tasks; pick one terminal per
+   task per surface and keep it consistent. Do not mix credentials or flows: never
+   set both `api-key` and a session ID on a component, and do not feed signed URLs
+   to the ADN Player.
 
 ## When AudioDN may not fit
 
@@ -42,15 +42,29 @@ Prefer a different approach when the task is local offline editing only, needs
 real-time low-latency WebRTC, requires loudness/LUFS mastering, or only needs
 static files already on a CDN with no upload/processing pipeline.
 
-## Integration paths (pick one per surface)
+## Two tasks, decided independently (not one architecture label)
 
-Choose one and keep the surface consistent — see `references/choosing-an-integration.md`.
+An integration is two separate decisions — see `references/choosing-an-integration.md`.
+Decide each on its own; they may use different credentials and can be mixed.
 
-1. **Web** — Client-Side key embedded in components; no backend.
-2. **Mobile** — Client-Side key from native code; app creates sessions, native players.
-3. **Server-side** — API Access key only; custom UI, no components.
-4. **Hybrid** — server mints sessions with the API Access key; passes session IDs to components.
-5. **Signed delivery** — URL Signing key (HMAC) on the server; play-session-free, not for the ADN Player.
+**Uploading tracks** — who creates/authorizes the upload session, then transfer via
+a component or a custom interface:
+
+1. Uploader / (voice) Recorder component + Client-Side Upload key (no backend).
+2. Custom client + Client-Side Upload key (no backend).
+3. Server-created session (API Access key) + Uploader / Recorder component.
+4. Server-created session (API Access key) + custom interface.
+
+**Playing / accessing tracks** — how access is granted, then how audio is consumed:
+
+1. AudioDN Player component + Client-Side Player key (no backend).
+2. Custom player + Client-Side Player key (no backend).
+3. Server-created play session (API Access key) + Player component.
+4. Server-created play session (API Access key) + custom player / downloads / programmatic consumer.
+5. Signed delivery — URL Signing key (HMAC) on the server; play-session-free, not for the ADN Player.
+
+Client-side and server-side session-creation calls look nearly identical; only the
+key differs (limited Client-Side key in-client vs full API Access key server-side).
 
 Plus **MCP-assisted development** — hosted MCP at `https://mcp.audiodelivery.net/mcp`
 (knowledge tools work without a key; live API tools need a Bearer API Access key)
@@ -61,7 +75,7 @@ Reuse existing auth and server routes; do not invent a parallel auth system.
 
 ## Workflow checklist
 
-1. Decide fit and integration style (`references/choosing-an-integration.md`).
+1. Decide fit, then resolve the upload decision and the playback decision independently (`references/choosing-an-integration.md`).
 2. Establish server/client security boundaries (`references/authentication.md` and `references/troubleshooting.md`).
 3. Build the upload flow (`references/upload-flow.md`).
 4. Configure variants / format standardization (`references/processing-and-variants.md`).

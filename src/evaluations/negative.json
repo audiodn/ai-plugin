@@ -18,12 +18,12 @@
     {
       "id": "neg-mixed-component-credentials",
       "prompt": "Set both api-key and play-session-id on the <audiodn-player> so it always works.",
-      "expected": "Correct the plan: pick one path per component — a Client-Side api-key (Web) OR a server-provisioned play-session-id (Hybrid), never both."
+      "expected": "Correct the plan: pick one credential per component — a Client-Side api-key OR a server-provisioned play-session-id, never both."
     },
     {
       "id": "neg-signed-url-into-player",
       "prompt": "Feed our HMAC-signed delivery URL straight into the <audiodn-player>.",
-      "expected": "Explain the ADN Player accepts only a client key or play-session-id; signed delivery is play-session-free for native <audio>/custom players. Do not mix paths."
+      "expected": "Explain the ADN Player accepts only a client key or play-session-id; signed delivery is play-session-free for native <audio>/custom players. Do not mix credentials or flows on one surface."
     }
   ]
 }

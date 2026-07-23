@@ -16,13 +16,14 @@
 Play sessions (`POST /v1/play_session/{scope}`) and upload sessions
 (`POST /v1/upload_session`) are authorized by a **Bearer** key that is **either**:
 
-- an **API Access key** on the server (Server-side / Hybrid paths), **or**
-- a scoped **Client-Side** Player / Uploader key used in-client (Web / Mobile
-  paths — the component or app holds it).
+- an **API Access key** on the server, **or**
+- a scoped **Client-Side** Player / Uploader key used in-client (the component or
+  app holds it).
 
-The real invariant is **never ship the API Access key to a client**. A scoped
-Client-Side key and a session ID are the client-safe credentials. Session
-creation is not inherently server-only.
+The two calls look nearly identical — only the key differs. The real invariant is
+**never ship the API Access key to a client**. A scoped Client-Side key and a
+session ID are the client-safe credentials. Session creation is not inherently
+server-only.
 
 ## Minting client-side keys
 

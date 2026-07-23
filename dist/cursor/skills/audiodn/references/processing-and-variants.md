@@ -23,7 +23,10 @@ Do not assume a just-uploaded track is ready. The uploader component’s
 ## Variants (format standardization)
 
 - A **variant** is a reusable recipe (`variant_type_id`, delivery `index` such as `hq`, `lq`, `voice`).
-- A **track file** is the stored output of applying a variant.
+- A **track file** is the stored output of applying a variant. All of a track's
+  variant files live under the track's delivery prefix — `track.base_path` /
+  `track.base_url` from the track-creation response — plus a variant suffix and
+  extension (e.g. `{base_url}_preview.mp3`).
 - Track-specific API creation supports types such as `transcode` and `preview`
   (lossy codecs include `aac`, `mp3`, `ogg`, `opus` per docs). Org-wide recipes
   (analysis, waveform assets, original) are configured in the dashboard.

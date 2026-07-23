@@ -8,12 +8,15 @@ description: Add a secure AudioDN upload flow to the current project (inspect-fi
 ## Before editing
 
 1. Inspect the project framework, existing auth, API routes, and env patterns.
-2. Confirm whether web components, direct API, or hybrid fit best.
+2. Pick the upload terminal: who creates/authorizes the session (Client-Side
+   Upload key in-client, or API Access key server-side) and whether files move
+   through a web component (Uploader / (voice) Recorder) or a custom interface
+   (`skills/audiodn/references/choosing-an-integration.md`).
 3. Do not introduce a parallel auth system or expose API Access keys to clients.
 
 ## Implement
 
-Follow `skills/audiodn/references/upload-flow.md` (path selection:
+Follow `skills/audiodn/references/upload-flow.md` (terminal selection:
 `skills/audiodn/references/choosing-an-integration.md`; guided steps:
 `skills/audiodn/references/workflows.md`):
 

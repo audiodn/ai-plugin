@@ -8,13 +8,16 @@ description: Add secure AudioDN playback or delivery to the current project (ins
 ## Before editing
 
 1. Inspect existing UI, server routes, and whether tracks are already `ready`.
-2. Choose play sessions, signed delivery, or `<audiodn-player>`.
+2. Pick the playback terminal: a play session (API Access key server-side, or a
+   scoped Client-Side Player key in-client) or signed delivery, and the consumer
+   (`<audiodn-player>`, a custom player, downloads, or a programmatic consumer) —
+   see `skills/audiodn/references/choosing-an-integration.md`.
 3. Never place an API Access key in client code.
 
 ## Implement
 
 Follow `skills/audiodn/references/playback-and-delivery.md` and
-`skills/audiodn/references/web-components.md` (pick one path:
+`skills/audiodn/references/web-components.md` (pick one playback terminal:
 `skills/audiodn/references/choosing-an-integration.md`; guided steps:
 `skills/audiodn/references/workflows.md`):
 
