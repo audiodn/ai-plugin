@@ -26,8 +26,9 @@ Key attributes:
 - `api-key` **or** `play-session-id` (never both; never a server API Access key)
 - `scope` — `track` | `collection`
 - `id` — track or collection id matching scope
-- `variant` (single) / `variants` — delivery index(es), e.g. `hq,lq`
-- `size` — `small` | `regular` | `large` (default `large`)
+- `variants` — delivery index(es) in priority order, e.g. `hq,lq` (first is default)
+- `size` — `small` | `regular` | `large` (default `large`; applies to the `default` layout)
+- `variant` — layout: `default` (full player) | `inline` (compact play/pause button with a clockwise progress ring + settings menu; shows no track info — surface it yourself). `height` sizes the inline button.
 - `theme` — `auto` | `dark` | `light`
 - `volume`, `autoplay`, `downloadable` (request only; the key/session must allow downloads)
 - `session-ttl`
@@ -51,8 +52,8 @@ counterpart to the uploader.
   then PUTs the recording (the single-file nested-`track` convenience).
 - Filenames are generated from the UTC timestamp; the browser picks a supported
   mime type (Opus in WebM/Ogg, else MP4/AAC on Safari).
-- `variant` (`panel` default / `tiny`), `accent-color`, `theme`, `locale`,
-  `countdown`, `max-duration`, `height` (tiny), `auto-hide`, `disabled`
+- `variant` (`panel` default / `inline`), `accent-color`, `theme`, `locale`,
+  `countdown`, `max-duration`, `height` (inline), `auto-hide`, `disabled`
 - Events: `recording-started`, `recording-stopped` (`{ blob, duration }`),
   `recording-discarded`, `upload-progress` (`{ percent }`),
   `file-uploaded` (`{ trackId, fileName, blob }` ⇒ bytes stored, **not** ready),
