@@ -59,10 +59,10 @@ function copyText(from, to) {
 function pluginReadme(listing, platform) {
   const authNote =
     platform === 'Claude Code'
-      ? `- Optional live-API auth: set \`ADN_API_KEY\` and configure headers as \`Authorization: Bearer \${ADN_API_KEY}\` (Claude expands env vars in \`.mcp.json\`).`
+      ? `- Live API (store/play/preview): set plugin/env \`ADN_API_KEY\` so \`.mcp.json\` can send \`Authorization: Bearer \${ADN_API_KEY}\`.`
       : platform === 'Cursor'
-        ? `- Optional live-API auth: add headers \`"Authorization": "Bearer \${env:ADN_API_KEY}"\` in MCP settings (Cursor env interpolation).`
-        : `- Optional live-API auth: configure the hosted MCP Bearer key in the host credential UI (do not commit keys).`;
+        ? `- Live API (store/play/preview): open **Plugins → AudioDN → Configure** and paste an API Access key (\`ADN_API_KEY\`). Knowledge tools work with no key.`
+        : `- Live API (store/play/preview): paste an API Access key in the host credential UI (do not commit keys). Knowledge tools work with no key.`;
 
   return `# ${listing.displayName} plugin (${platform})
 
@@ -101,6 +101,9 @@ function mcpConfigCursor(listing) {
     mcpServers: {
       audiodn: {
         url: listing.mcp.hostedUrl,
+        headers: {
+          Authorization: 'Bearer ${ADN_API_KEY}',
+        },
       },
     },
   };
@@ -116,6 +119,9 @@ function mcpConfigClaude(listing) {
       audiodn: {
         type: 'http',
         url: listing.mcp.hostedUrl,
+        headers: {
+          Authorization: 'Bearer ${ADN_API_KEY}',
+        },
       },
     },
   };
@@ -129,6 +135,9 @@ function mcpConfigOpenai(listing) {
   return {
     audiodn: {
       url: listing.mcp.hostedUrl,
+      headers: {
+        Authorization: 'Bearer ${ADN_API_KEY}',
+      },
     },
   };
 }
@@ -138,6 +147,7 @@ function buildCursor(listing) {
   emptyDir(out);
   writeJson(join(out, '.cursor-plugin', 'plugin.json'), {
     name: listing.name,
+    displayName: listing.displayName,
     version: listing.version,
     description: listing.description,
     author: listing.author,
@@ -146,6 +156,8 @@ function buildCursor(listing) {
     license: listing.license,
     keywords: listing.keywords,
     logo: listing.logo,
+    primaryColor: listing.primaryColor || listing.brandColor,
+    variables: listing.pluginVariables,
   });
   copyDir(join(SRC, 'skills', 'audiodn'), join(out, 'skills', 'audiodn'));
   copyDir(join(SRC, 'commands'), join(out, 'commands'));
@@ -169,6 +181,7 @@ function buildClaude(listing) {
     repository: listing.repository,
     license: listing.license,
     keywords: listing.keywords,
+    logo: listing.logo,
     // External MCP — install disabled until user opts in (Claude Code >= 2.1.154)
     defaultEnabled: false,
   });
@@ -209,8 +222,8 @@ function buildOpenai(listing) {
       termsOfServiceURL: listing.canonical.terms,
       defaultPrompt: listing.defaultPrompts,
       brandColor: listing.brandColor,
-      logo: './assets/logo-square.png',
-      composerIcon: './assets/logo-square.png',
+      logo: `./${listing.logoSquare || 'assets/logo-square.png'}`,
+      composerIcon: `./${listing.logoSquare || 'assets/logo-square.png'}`,
     },
   });
   copyDir(join(SRC, 'skills', 'audiodn'), join(out, 'skills', 'audiodn'));
@@ -223,14 +236,15 @@ function buildOpenai(listing) {
 function writeRootMarketplaces(listings) {
   writeJson(join(ROOT, '.cursor-plugin', 'marketplace.json'), {
     name: 'audiodn-ai-plugin',
-    owner: { name: 'AudioDN' },
+    owner: { name: listings.cursor.displayName },
     metadata: {
-      description: 'AudioDN plugin for Cursor',
+      description: `${listings.cursor.displayName} plugin for Cursor`,
       version: pkg.version,
     },
     plugins: [
       {
         name: listings.cursor.name,
+        displayName: listings.cursor.displayName,
         source: 'dist/cursor',
         description: listings.cursor.description,
         version: listings.cursor.version,
@@ -239,7 +253,7 @@ function writeRootMarketplaces(listings) {
         repository: listings.cursor.repository,
         license: listings.cursor.license,
         keywords: listings.cursor.keywords,
-        logo: 'dist/cursor/assets/logo-square.png',
+        logo: `dist/cursor/${listings.cursor.logo}`,
         category: listings.cursor.category,
       },
     ],
@@ -247,9 +261,9 @@ function writeRootMarketplaces(listings) {
 
   writeJson(join(ROOT, '.claude-plugin', 'marketplace.json'), {
     name: 'audiodn-ai-plugin',
-    owner: { name: 'AudioDN' },
+    owner: { name: listings.claude.displayName },
     metadata: {
-      description: 'AudioDN plugin for Claude Code',
+      description: `${listings.claude.displayName} plugin for Claude Code`,
       version: pkg.version,
     },
     plugins: [
@@ -273,7 +287,7 @@ function writeRootMarketplaces(listings) {
 
   writeJson(join(ROOT, '.agents', 'plugins', 'marketplace.json'), {
     name: 'audiodn-ai-plugin',
-    interface: { displayName: 'AudioDN' },
+    interface: { displayName: listings.openai.displayName },
     plugins: [
       {
         name: listings.openai.name,

@@ -5,16 +5,17 @@
   },
   "metadata": {
     "description": "AudioDN plugin for Cursor",
-    "version": "1.0.0"
+    "version": "1.0.2"
   },
   "plugins": [
     {
       "name": "audiodn",
+      "displayName": "AudioDN",
       "source": "dist/cursor",
-      "description": "AudioDN integration skill, upload/playback workflows, and hosted MCP for Cursor agents.",
-      "version": "1.0.0",
+      "description": "Hosted audio library for Cursor agents — store, play, and preview files you generate or find, with secure upload/playback APIs for your app.",
+      "version": "1.0.2",
       "author": {
-        "name": "AudioDN",
+        "name": "Audio Delivery Network",
         "url": "https://github.com/audiodn"
       },
       "homepage": "https://audiodeliverynetwork.com",
@@ -29,7 +30,7 @@
         "audiodn",
         "cdn"
       ],
-      "logo": "dist/cursor/assets/logo-square.png",
+      "logo": "dist/cursor/assets/logo.svg",
       "category": "Developer Tools"
     }
   ]

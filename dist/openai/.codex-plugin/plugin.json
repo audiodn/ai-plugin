@@ -1,9 +1,9 @@
 {
   "name": "audiodn",
-  "version": "1.0.0",
-  "description": "AudioDN MCP plus skills for secure audio infrastructure in coding agents.",
+  "version": "1.0.2",
+  "description": "Hosted audio library for coding agents: store, play, and preview audio, plus AudioDN MCP and integration skills.",
   "author": {
-    "name": "AudioDN",
+    "name": "Audio Delivery Network",
     "url": "https://github.com/audiodn"
   },
   "homepage": "https://audiodeliverynetwork.com",
@@ -22,9 +22,9 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "AudioDN",
-    "shortDescription": "Build secure audio upload, format standardization, and playback with AudioDN.",
-    "longDescription": "AudioDN (Audio Delivery Network) is hosted audio infrastructure for coding agents. This plugin teaches the correct security boundaries and API sequences—upload session, per-track create, processing readiness, variants, and playback—and wires the hosted AudioDN MCP server for grounded docs plus optional live API tools. It is the AudioDN plugin for AI coding tools, not a separate product.",
-    "developerName": "AudioDN",
+    "shortDescription": "A hosted place for agents to store, play, and preview audio — plus the APIs to put it in your app.",
+    "longDescription": "AudioDN (Audio Delivery Network) is hosted audio infrastructure. Add it to a Cursor bot or any app when you need a durable place to keep audio that agents come across — generated clips, downloads, voice notes, podcasts, UGC — then play, preview, and reuse those tracks. This plugin wires the hosted AudioDN MCP (docs without a key; live catalog/upload/playback tools after you paste an API Access key), teaches the correct security boundaries and API sequence (upload session → per-track create → processing readiness → play session or signed delivery), and is the AudioDN plugin for AI coding tools, not a separate product.",
+    "developerName": "Audio Delivery Network",
     "category": "Developer Tools",
     "capabilities": [
       "Read",
@@ -34,12 +34,12 @@
     "privacyPolicyURL": "https://audiodeliverynetwork.com/privacy",
     "termsOfServiceURL": "https://audiodeliverynetwork.com/terms",
     "defaultPrompt": [
+      "Store this audio in AudioDN so I can play and preview it later.",
+      "Add AudioDN to this app as the place agents store, play, and preview audio.",
       "Add a secure AudioDN upload flow without exposing server API keys.",
-      "Upload multiple tracks in one AudioDN upload session and wait until they are ready.",
-      "Add secure AudioDN playback to this existing web app.",
       "Audit our AudioDN integration for missing per-track uploads and client-side server keys."
     ],
-    "brandColor": "#5B8CFF",
+    "brandColor": "#742CC2",
     "logo": "./assets/logo-square.png",
     "composerIcon": "./assets/logo-square.png"
   }

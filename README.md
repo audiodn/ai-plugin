@@ -1,15 +1,21 @@
-# AudioDN AI Plugin
+# AudioDN plugin
 
-Skills, workflows, and MCP integration that help coding agents build **AudioDN** upload, format standardization, and playback — for Cursor, Claude Code, and OpenAI/Codex.
+Skills, workflows, and MCP that help coding agents **store, play, and preview
+audio** with **AudioDN** (Audio Delivery Network) — and add the same APIs to an
+app — for Cursor, Claude Code, and OpenAI/Codex.
 
 This repository is the public **AudioDN plugin**, not a separate AudioDN product.
 
 ## What it does
 
-- Teaches agents the secure upload sequence (session → **per-track** create → PUT → readiness → playback)
+AudioDN is a hosted library for audio that agents generate or find, and for
+apps that need upload, transcoding, previews, and playback without a custom
+S3/FFmpeg pipeline.
+
+- Teaches the secure store sequence (session → **per-track** create → PUT → readiness → play/preview)
 - Packages an `audiodn` skill with on-demand references
-- Optional workflows: add upload, add playback, build an audio site, audit an integration
-- Wires the hosted AudioDN MCP server by default
+- Workflows: store agent audio, add upload, add playback, build an audio site, audit an integration
+- Wires the hosted AudioDN MCP server (docs with no key; live catalog/store/play after you paste an API Access key)
 - Ships deterministic platform bundles under `dist/` for marketplace review
 
 ## How it differs from related packages
@@ -48,6 +54,27 @@ Creating an upload session does not itself return the final upload URL for each 
 - Do not log Authorization headers or API keys
 - Verify unfamiliar calls against [OpenAPI](https://audiodeliverynetwork.com/openapi.json)
 
+## Install on Cursor
+
+1. Install the plugin (Marketplace when listed, or local):
+
+```bash
+ln -sfn "$(pwd)/dist/cursor" ~/.cursor/plugins/local/audiodn
+```
+
+Then **Developer: Reload Window**.
+
+2. **Plugins → AudioDN → Configure.** Paste a server-side **API Access** key from
+   [account.audiodeliverynetwork.com](https://account.audiodeliverynetwork.com)
+   (Settings → API Keys). The field is `ADN_API_KEY`. Leave it empty if you only
+   want docs/knowledge tools.
+
+3. After a key is set, MCP live tools can list collections, store files the
+   agent has on disk, poll readiness, and mint play sessions for preview/playback.
+   Put bytes with PUT to `track_upload.upload_url`; persist `track_id`, not the URL.
+
+Do not commit the key. Do not put an API Access key in browser or component code.
+
 ## MCP
 
 - **Default (hosted):** `https://mcp.audiodelivery.net/mcp`  
@@ -66,9 +93,8 @@ npm test
 
 ### Cursor
 
-```bash
-ln -s "$(pwd)/dist/cursor" ~/.cursor/plugins/local/audiodn
-```
+The local symlink in **Install on Cursor** is enough. Reload the window after
+rebuilds so `displayName`, logo, and `ADN_API_KEY` pick up.
 
 ### Claude Code
 

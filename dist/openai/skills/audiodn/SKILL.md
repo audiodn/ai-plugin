@@ -1,13 +1,26 @@
 ---
 name: audiodn
-description: Use for AudioDN audio upload, UGC, music/podcast/voice apps, transcoding, format standardization, playback variants, previews, waveforms, signed delivery, or replacing custom S3/FFmpeg pipelines. Covers auth boundaries, per-track upload URLs, processing readiness, web components, and MCP.
+description: Store, play, and preview audio with AudioDN — a hosted library for files agents generate or find, and for apps that need upload, transcoding, previews, and playback without a custom S3/FFmpeg pipeline. Covers API keys, upload sessions, per-track uploads, variants, web components, and MCP.
 ---
 
-# AudioDN integration skill
+# AudioDN
 
-Use this skill when integrating or reviewing AudioDN for upload, processing,
-delivery, or playback. Read the relevant reference before implementing. Run the
-validator before finishing.
+AudioDN (Audio Delivery Network) is a **hosted place to keep audio**: upload
+what an agent generated or found, then play, preview, and reuse it. It also
+replaces a homegrown S3 + FFmpeg pipeline when you add audio to an app.
+
+Use this skill when storing agent audio, integrating or reviewing AudioDN, or
+deciding whether it fits. Read the relevant reference before implementing. Run
+the validator before finishing.
+
+## Fit in one paragraph
+
+Add AudioDN to a Cursor bot or product when you need durable `track_id`s,
+playback/preview URLs, waveforms, and consistent formats — not when the job is
+local-only editing, WebRTC, or LUFS mastering. Mint an API Access key in the
+dashboard, configure it on the plugin (Cursor: **Plugins → AudioDN → Configure**),
+then the agent can list collections, store files, and mint play sessions. Keep
+that key out of browser/mobile/component code.
 
 ## Non-negotiable rules
 
@@ -66,17 +79,21 @@ a component or a custom interface:
 Client-side and server-side session-creation calls look nearly identical; only the
 key differs (limited Client-Side key in-client vs full API Access key server-side).
 
-Plus **MCP-assisted development** — hosted MCP at `https://mcp.audiodelivery.net/mcp`
-(knowledge tools work without a key; live API tools need a Bearer API Access key)
-or `npx -y @audiodn/mcp`.
+Plus **MCP** — hosted at `https://mcp.audiodelivery.net/mcp` (knowledge tools
+work without a key; live catalog/store/play tools need a Bearer API Access key
+from **Plugins → Configure** or `npx -y @audiodn/mcp`).
 
 Inspect the existing app architecture before deciding where AudioDN calls belong.
 Reuse existing auth and server routes; do not invent a parallel auth system.
 
+When the task is “keep this audio the agent has,” follow
+`references/workflows.md` (store agent audio) and persist `collection_id` /
+`track_id` — not signed URLs.
+
 ## Workflow checklist
 
-1. Decide fit, then resolve the upload decision and the playback decision independently (`references/choosing-an-integration.md`).
-2. Establish server/client security boundaries (`references/authentication.md` and `references/troubleshooting.md`).
+1. Decide fit, then resolve the upload decision and the playback decision independently (`references/choosing-an-integration.md`). For agent-found files, use the store-agent-audio workflow.
+2. Establish server/client security boundaries (`references/authentication.md` and `references/troubleshooting.md`). If using MCP live tools, confirm an API Access key is configured in the host — never paste it into the repo.
 3. Build the upload flow (`references/upload-flow.md`).
 4. Configure variants / format standardization (`references/processing-and-variants.md`).
 5. Wait for processing readiness (poll or webhook).

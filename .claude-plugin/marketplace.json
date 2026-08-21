@@ -5,17 +5,17 @@
   },
   "metadata": {
     "description": "AudioDN plugin for Claude Code",
-    "version": "1.0.0"
+    "version": "1.0.2"
   },
   "plugins": [
     {
       "name": "audiodn",
       "source": "./dist/claude",
-      "description": "AudioDN skills and MCP for secure audio upload, format standardization, and playback.",
-      "version": "1.0.0",
+      "description": "Hosted audio library for agents: store, play, and preview audio, plus secure AudioDN upload and playback skills.",
+      "version": "1.0.2",
       "displayName": "AudioDN",
       "author": {
-        "name": "AudioDN",
+        "name": "Audio Delivery Network",
         "url": "https://github.com/audiodn"
       },
       "homepage": "https://audiodeliverynetwork.com",

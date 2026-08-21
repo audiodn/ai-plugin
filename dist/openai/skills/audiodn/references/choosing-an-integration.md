@@ -15,6 +15,12 @@ product can mix them (for example, signed previews plus gated full tracks). Ther
 is no single "Web / Mobile / Hybrid / Server-side" mode to pick up front — that
 older framing is retired (see the legacy map at the end).
 
+**Cursor bot / agent library.** If the goal is “keep audio this agent generated or
+found,” use an API Access key in the host (plugin Configure / MCP) to store
+tracks, then a play session or player for preview. That is the same upload
+sequence as any other terminal; there is no separate agent API. See
+`references/workflows.md` (store agent audio).
+
 - Docs: https://audiodeliverynetwork.com/docs/integration
 - Uploading: https://audiodeliverynetwork.com/docs/integration/uploading
 - Playing / accessing: https://audiodeliverynetwork.com/docs/integration/playback

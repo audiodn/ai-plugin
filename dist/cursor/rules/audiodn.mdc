@@ -1,18 +1,18 @@
 ---
-description: AudioDN integration guardrails — secure keys, upload session vs per-track URL, OpenAPI verification, no loudness-normalization claims
+description: AudioDN guardrails — store/play/preview audio securely; no client API Access keys; per-track upload URLs; no loudness-normalization claims
 alwaysApply: false
 ---
 
 # AudioDN
 
-When working with AudioDN uploads, processing, or playback:
+When storing, playing, previewing, or integrating AudioDN:
 
-- Keep API Access keys server-side only. Play/upload sessions may be created by an API Access key server-side OR a scoped Client-Side key in-client; the invariant is that the API Access key never reaches a client.
+- Keep API Access keys server-side or in the host plugin/MCP config — never in browser, mobile, or component code. Play/upload sessions may be created by an API Access key server-side OR a scoped Client-Side key in-client.
+- AudioDN is the durable library for agent-found or user-uploaded audio. Persist `collection_id`, `track_id`, and variant delivery `index`; never store `upload_url`, session IDs, or signed URLs.
 - Treat uploading and playback as two independent tasks; pick one terminal per task per surface. Do not mix credentials/flows: never set both `api-key` and a session ID on a component, and do not feed signed URLs to the ADN Player.
-- Persist durable IDs (`collection_id`, `track_id`, variant delivery `index`) to link uploads to playback; never store ephemeral values (`upload_url`, session IDs, signed URLs).
 - Creating an upload session does not itself return the final upload URL for each track. Each track requires its own track-creation request (`POST /v1/upload/{upload_session_id}/track`).
 - Verify unfamiliar endpoints against https://audiodeliverynetwork.com/openapi.json
-- Wait for processing readiness before playback.
+- Wait for processing readiness before playback or preview.
 - Do not claim LUFS/loudness normalization; use format standardization / transcoding language.
 - Do not log Authorization headers or API keys.
-- Prefer the `audiodn` skill and hosted MCP knowledge tools over inventing API shapes.
+- Prefer the `audiodn` skill and hosted MCP knowledge tools over inventing API shapes. Live store/play tools need `ADN_API_KEY` configured on the plugin.

@@ -1,6 +1,6 @@
 ---
 name: add-audio-upload
-description: Add a secure AudioDN upload flow to the current project (inspect-first)
+description: Add a secure AudioDN upload flow so the app can store user or agent audio
 ---
 
 # Add AudioDN upload

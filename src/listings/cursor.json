@@ -1,7 +1,7 @@
 {
   "extends": "shared.json",
   "name": "audiodn",
-  "description": "AudioDN integration skill, upload/playback workflows, and hosted MCP for Cursor agents.",
+  "description": "Hosted audio library for Cursor agents — store, play, and preview files you generate or find, with secure upload/playback APIs for your app.",
   "keywords": [
     "audio",
     "upload",

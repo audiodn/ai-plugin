@@ -1,6 +1,6 @@
 ---
 name: add-audio-playback
-description: Add secure AudioDN playback or delivery to the current project (inspect-first)
+description: Add AudioDN playback, previews, or delivery for stored tracks
 ---
 
 # Add AudioDN playback

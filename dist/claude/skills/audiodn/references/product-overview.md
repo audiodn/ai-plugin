@@ -1,8 +1,19 @@
 # Product overview
 
-AudioDN (Audio Delivery Network) is a hosted audio CDN and processing platform:
-upload audio, transcode to consistent playback variants, and deliver via play
-sessions or signed URLs. It is operated by Audio Delivery Network.
+AudioDN (Audio Delivery Network) is a hosted audio library and delivery
+platform: store audio, transcode it to consistent playback variants, then play,
+preview, or deliver it. It is operated by Audio Delivery Network.
+
+## Why add it (including to a Cursor bot)
+
+Agents constantly generate or stumble on audio — TTS clips, downloads, voice
+notes, demo tracks. AudioDN is the place to **keep those files**, then **play
+and preview** them later, without standing up S3, queues, and FFmpeg. Your app
+stores durable IDs (`collection_id`, `track_id`); AudioDN holds the bytes and
+the playback variants.
+
+Fit: you need hosted storage + format standardization + signed/play-session
+delivery. Not a fit: local-only editing, realtime WebRTC, or LUFS mastering.
 
 ## What it provides
 
@@ -13,6 +24,7 @@ sessions or signed URLs. It is operated by Audio Delivery Network.
 - Optional HMAC URL signing for public/entitled delivery
 - Web components: player, uploader, (voice) recorder, waveform
 - MCP server for agent-assisted development and optional live API tools
+  (list/store/play once an API Access key is configured)
 
 ## Pricing model (product guidance)
 

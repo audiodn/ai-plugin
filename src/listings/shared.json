@@ -3,22 +3,34 @@
   "displayName": "AudioDN",
   "version": "1.0.0",
   "author": {
-    "name": "AudioDN",
+    "name": "Audio Delivery Network",
     "url": "https://github.com/audiodn"
   },
   "homepage": "https://audiodeliverynetwork.com",
   "repository": "https://github.com/audiodn/ai-plugin",
   "license": "MIT",
-  "logo": "assets/logo-square.png",
+  "logo": "assets/logo.svg",
+  "logoSquare": "assets/logo-square.png",
   "logoWide": "assets/logo.png",
-  "shortDescription": "Build secure audio upload, format standardization, and playback with AudioDN.",
-  "description": "AudioDN skills, workflows, and MCP for coding agents: secure upload sessions, per-track uploads, variants, and playback without inventing endpoints or exposing server API keys.",
-  "longDescription": "AudioDN (Audio Delivery Network) is hosted audio infrastructure for coding agents. This plugin teaches the correct security boundaries and API sequences—upload session, per-track create, processing readiness, variants, and playback—and wires the hosted AudioDN MCP server for grounded docs plus optional live API tools. It is the AudioDN plugin for AI coding tools, not a separate product.",
-  "brandColor": "#5B8CFF",
+  "shortDescription": "A hosted place for agents to store, play, and preview audio — plus the APIs to put it in your app.",
+  "description": "AudioDN is a hosted audio library for coding agents: store files you generate or find, then play, preview, and deliver them. The plugin also teaches secure upload, transcoding, and playback so you do not invent S3/FFmpeg pipelines or leak API keys.",
+  "longDescription": "AudioDN (Audio Delivery Network) is hosted audio infrastructure. Add it to a Cursor bot or any app when you need a durable place to keep audio that agents come across — generated clips, downloads, voice notes, podcasts, UGC — then play, preview, and reuse those tracks. This plugin wires the hosted AudioDN MCP (docs without a key; live catalog/upload/playback tools after you paste an API Access key), teaches the correct security boundaries and API sequence (upload session → per-track create → processing readiness → play session or signed delivery), and is the AudioDN plugin for AI coding tools, not a separate product.",
+  "brandColor": "#742CC2",
+  "primaryColor": "#742CC2",
+  "pluginVariables": {
+    "type": "object",
+    "properties": {
+      "ADN_API_KEY": {
+        "type": "string",
+        "title": "AudioDN API Access key",
+        "description": "Optional. Mint a server-side API Access key at https://account.audiodeliverynetwork.com (Settings → API Keys). Knowledge tools work without it. Set this to list collections, store audio from the agent, mint play sessions, and preview tracks. Never put this key in client or component code."
+      }
+    }
+  },
   "defaultPrompts": [
+    "Store this audio in AudioDN so I can play and preview it later.",
+    "Add AudioDN to this app as the place agents store, play, and preview audio.",
     "Add a secure AudioDN upload flow without exposing server API keys.",
-    "Upload multiple tracks in one AudioDN upload session and wait until they are ready.",
-    "Add secure AudioDN playback to this existing web app.",
     "Audit our AudioDN integration for missing per-track uploads and client-side server keys."
   ],
   "keywords": [
@@ -31,7 +43,9 @@
     "music",
     "cdn",
     "mcp",
-    "audiodn"
+    "audiodn",
+    "preview",
+    "storage"
   ],
   "category": "Developer Tools",
   "mcp": {

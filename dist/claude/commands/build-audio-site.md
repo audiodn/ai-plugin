@@ -1,6 +1,6 @@
 ---
 name: build-audio-site
-description: Scaffold or extend a site with AudioDN-backed upload and playback (inspect-first)
+description: Scaffold or extend a site that stores, plays, and previews audio with AudioDN
 ---
 
 # Build an AudioDN-backed audio site

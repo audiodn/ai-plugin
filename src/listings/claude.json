@@ -1,7 +1,7 @@
 {
   "extends": "shared.json",
   "name": "audiodn",
-  "description": "AudioDN skills and MCP for secure audio upload, format standardization, and playback.",
+  "description": "Hosted audio library for agents: store, play, and preview audio, plus secure AudioDN upload and playback skills.",
   "keywords": [
     "audio",
     "upload",

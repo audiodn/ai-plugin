@@ -1,7 +1,7 @@
 {
   "name": "@audiodn/ai-plugin",
-  "version": "1.0.0",
-  "description": "AudioDN skills, workflows, and MCP integration for AI coding tools (Cursor, Claude Code, OpenAI/Codex)",
+  "version": "1.0.2",
+  "description": "AudioDN plugin for Cursor, Claude Code, and Codex: store, play, and preview audio from agents, plus secure upload/playback skills and MCP.",
   "type": "module",
   "license": "MIT",
   "files": [

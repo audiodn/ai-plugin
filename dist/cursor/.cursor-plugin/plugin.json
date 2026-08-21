@@ -1,9 +1,10 @@
 {
   "name": "audiodn",
-  "version": "1.0.0",
-  "description": "AudioDN integration skill, upload/playback workflows, and hosted MCP for Cursor agents.",
+  "displayName": "AudioDN",
+  "version": "1.0.2",
+  "description": "Hosted audio library for Cursor agents — store, play, and preview files you generate or find, with secure upload/playback APIs for your app.",
   "author": {
-    "name": "AudioDN",
+    "name": "Audio Delivery Network",
     "url": "https://github.com/audiodn"
   },
   "homepage": "https://audiodeliverynetwork.com",
@@ -18,5 +19,16 @@
     "audiodn",
     "cdn"
   ],
-  "logo": "assets/logo-square.png"
+  "logo": "assets/logo.svg",
+  "primaryColor": "#742CC2",
+  "variables": {
+    "type": "object",
+    "properties": {
+      "ADN_API_KEY": {
+        "type": "string",
+        "title": "AudioDN API Access key",
+        "description": "Optional. Mint a server-side API Access key at https://account.audiodeliverynetwork.com (Settings → API Keys). Knowledge tools work without it. Set this to list collections, store audio from the agent, mint play sessions, and preview tracks. Never put this key in client or component code."
+      }
+    }
+  }
 }

@@ -1,6 +1,6 @@
 # AudioDN plugin (Cursor)
 
-AudioDN integration skill, upload/playback workflows, and hosted MCP for Cursor agents.
+Hosted audio library for Cursor agents — store, play, and preview files you generate or find, with secure upload/playback APIs for your app.
 
 ## Security
 
@@ -15,7 +15,7 @@ AudioDN integration skill, upload/playback workflows, and hosted MCP for Cursor 
 - Registry: `net.audiodelivery/mcp`
 - Local stdio: `npx -y @audiodn/mcp` with `ADN_API_KEY`
 - Knowledge/doc tools work without a key on the hosted server; live API tools need a Bearer API Access key.
-- Optional live-API auth: add headers `"Authorization": "Bearer ${env:ADN_API_KEY}"` in MCP settings (Cursor env interpolation).
+- Live API (store/play/preview): open **Plugins → AudioDN → Configure** and paste an API Access key (`ADN_API_KEY`). Knowledge tools work with no key.
 
 ## Canonical resources
 

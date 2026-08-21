@@ -17,7 +17,8 @@ Verify in Customize: skill `audiodn`, rule `audiodn` (not always-on), commands, 
 
 ## Manifest validation
 
-- [x] `dist/cursor/.cursor-plugin/plugin.json` — name `audiodn`, version, description, author, logo, keywords
+- [x] `dist/cursor/.cursor-plugin/plugin.json` — name `audiodn`, displayName `AudioDN`, version, description, author, logo SVG, primaryColor, optional `variables.ADN_API_KEY`, keywords
+- [x] `mcp.json` hosted URL + `Authorization: Bearer ${ADN_API_KEY}`
 - [x] Root `.cursor-plugin/marketplace.json` → `dist/cursor`
 - [x] Skill / rule / command frontmatter present
 - [x] Rule `alwaysApply: false`
@@ -30,9 +31,9 @@ Verify in Customize: skill `audiodn`, rule `audiodn` (not always-on), commands, 
 |-----------|------|
 | Skill | `skills/audiodn/` |
 | Rule | `rules/audiodn.mdc` |
-| Commands | `commands/*.md` (4) |
+| Commands | `commands/*.md` (5, including `store-agent-audio`) |
 | MCP | `mcp.json` |
-| Assets | `assets/logo.png`, `logo.svg` |
+| Assets | `assets/logo.svg` (icon), `logo-square.png`, `logo.png` |
 
 ## Marketplace description
 
@@ -53,7 +54,7 @@ https://cursor.com/marketplace/publish
 ## Screenshots / assets still required
 
 - [ ] 2–3 screenshots under `assets/screenshots/` (no secrets)
-- [ ] Optional: refine logo if marketplace requires square PNG only
+- [ ] Optional: marketplace may still prefer a raster square — `logo-square.png` is the official mark on a 512×512 field
 
 ## Known review risks
 

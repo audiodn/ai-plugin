@@ -6,6 +6,23 @@ detect the framework, reuse existing auth/server routes, and resolve the upload
 decision and the playback decision independently
 (`references/choosing-an-integration.md`) before editing.
 
+## Store agent audio
+
+When the user wants to keep audio the agent generated or found (not necessarily
+build an upload UI):
+
+1. Confirm `ADN_API_KEY` is set in the host (Cursor: Plugins → AudioDN →
+   Configure). Do not write the key into the repo.
+2. List or create a collection; persist `collection_id`.
+3. For each file: create an upload session, then a **per-track** create, PUT
+   bytes to `track_upload.upload_url`, persist `track_id`.
+4. Poll until `track.track_status_id` is `ready`.
+5. Use it: mint a play session for preview/playback URLs, embed
+   `<audiodn-player>`, or later sign delivery. Do not persist signed URLs.
+
+Creating an upload session does not itself return the final upload URL for each
+track. Each track requires its own track-creation request.
+
 ## Add upload
 
 1. Pick the upload terminal: who creates/authorizes the session (Client-Side

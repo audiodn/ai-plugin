@@ -1,6 +1,6 @@
 ---
 name: audit-audiodn-integration
-description: Audit an existing AudioDN integration for security and flow correctness
+description: Audit an AudioDN integration for key leaks, broken upload/play flows, and invented APIs
 ---
 
 # Audit an AudioDN integration

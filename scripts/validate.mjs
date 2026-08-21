@@ -145,6 +145,19 @@ for (const platform of ['cursor', 'claude', 'openai']) {
     }
   }
 
+  if (platform === 'cursor' || platform === 'claude') {
+    const auth = mcp.mcpServers?.audiodn?.headers?.Authorization;
+    if (auth !== 'Bearer ${ADN_API_KEY}') {
+      fail(`${platform}: MCP Authorization header must be Bearer \${ADN_API_KEY} (plugin variable)`);
+    }
+  }
+  if (platform === 'openai') {
+    const auth = mcp.audiodn?.headers?.Authorization;
+    if (auth !== 'Bearer ${ADN_API_KEY}') {
+      fail('openai: MCP Authorization header must be Bearer ${ADN_API_KEY}');
+    }
+  }
+
   // Platform-specific manifest extras
   if (platform === 'claude') {
     if (!man.displayName) fail('claude: plugin.json missing displayName');
@@ -169,8 +182,18 @@ for (const platform of ['cursor', 'claude', 'openai']) {
     }
   }
   if (platform === 'cursor') {
+    if (!man.displayName) fail('cursor: missing displayName');
+    if (man.displayName !== 'AudioDN') fail(`cursor: displayName should be AudioDN, got ${man.displayName}`);
     if (!man.logo) fail('cursor: missing logo');
     if (!existsSync(join(base, man.logo))) fail(`cursor: logo file missing: ${man.logo}`);
+    if (!man.primaryColor) fail('cursor: missing primaryColor');
+    const keyVar = man.variables?.properties?.ADN_API_KEY;
+    if (!keyVar || keyVar.type !== 'string') {
+      fail('cursor: plugin.json must declare optional ADN_API_KEY in variables');
+    }
+    if (Array.isArray(man.variables?.required) && man.variables.required.includes('ADN_API_KEY')) {
+      fail('cursor: ADN_API_KEY must be optional so knowledge tools work before a key is set');
+    }
   }
 
   // skill frontmatter

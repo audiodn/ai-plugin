@@ -1,10 +1,10 @@
 {
-  "auditedAt": "2026-07-21T17:50:49.371Z",
+  "auditedAt": "2026-08-21T15:12:53.272Z",
   "hostedUrl": "https://mcp.audiodelivery.net/mcp",
   "registryName": "net.audiodelivery/mcp",
   "npmPackage": "@audiodn/mcp",
   "localTypesPath": "/Users/gdbate/dev/audiodn/audiodn-mono/mcp/src/tools/types.ts",
-  "writePresetHasDestructiveFalse": false,
+  "writePresetHasDestructiveFalse": true,
   "toolCount": 24,
   "openaiBlockers": [
     "adn_create_creator",

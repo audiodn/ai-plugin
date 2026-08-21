@@ -1,6 +1,12 @@
 {
   "cases": [
     {
+      "id": "pos-store-agent-audio",
+      "prompt": "I generated a voice clip in this repo. Store it in AudioDN so I can play and preview it.",
+      "expected": "Asks for or uses configured API Access key (not written to repo); collection; per-track create; PUT bytes; persist track_id; wait for ready; play session or player for preview. No invented endpoints.",
+      "workflow": "store-agent-audio"
+    },
+    {
       "id": "pos-secure-upload",
       "prompt": "Add a secure AudioDN upload flow to this Next.js app so users can upload podcast episodes.",
       "expected": "Server route creates upload session with API Access key from env; per-track create; client uploads to track_upload.upload_url; no server key in client.",

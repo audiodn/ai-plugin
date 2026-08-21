@@ -1,7 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="AudioDN">
-  <rect width="128" height="128" rx="24" fill="#0B1220"/>
-  <path d="M34 78V50c0-2.2 1.8-4 4-4h8c2.2 0 4 1.8 4 4v28c0 2.2-1.8 4-4 4h-8c-2.2 0-4-1.8-4-4z" fill="#5B8CFF"/>
-  <path d="M54 88V40c0-2.2 1.8-4 4-4h8c2.2 0 4 1.8 4 4v48c0 2.2-1.8 4-4 4h-8c-2.2 0-4-1.8-4-4z" fill="#7AA2FF"/>
-  <path d="M74 70V58c0-2.2 1.8-4 4-4h8c2.2 0 4 1.8 4 4v12c0 2.2-1.8 4-4 4h-8c-2.2 0-4-1.8-4-4z" fill="#A8C0FF"/>
-  <circle cx="96" cy="40" r="10" fill="#FF6B4A"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="AudioDN">
+  <title>AudioDN</title>
+  <defs>
+    <linearGradient id="adn-mark" x1="96" y1="8" x2="400" y2="504" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#DF4D85"/>
+      <stop offset="48%" stop-color="#742CC2"/>
+      <stop offset="100%" stop-color="#4E21F1"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="#0B1220"/>
+  <g fill="url(#adn-mark)">
+    <g transform="translate(163.3 76.5) rotate(-45)">
+      <rect x="-73.5" y="-16" width="147" height="32" rx="16"/>
+    </g>
+    <g transform="translate(178.4 142.6) rotate(-45)">
+      <rect x="-169.5" y="-16" width="339" height="32" rx="16"/>
+    </g>
+    <g transform="translate(212.7 190.4) rotate(-45)">
+      <rect x="-217.5" y="-16" width="435" height="32" rx="16"/>
+    </g>
+    <g transform="translate(222.2 262.8) rotate(-45)">
+      <rect x="-125.5" y="-16" width="251" height="32" rx="16"/>
+    </g>
+    <g transform="translate(233.7 332.8) rotate(-45)">
+      <rect x="-210.5" y="-16" width="421" height="32" rx="16"/>
+    </g>
+    <g transform="translate(305.8 343.2) rotate(-45)">
+      <rect x="-205.5" y="-16" width="411" height="32" rx="16"/>
+    </g>
+    <g transform="translate(334.6 395.4) rotate(-45)">
+      <rect x="-87" y="-16" width="174" height="32" rx="16"/>
+    </g>
+  </g>
 </svg>

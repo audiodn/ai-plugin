@@ -1,7 +1,7 @@
 {
   "extends": "shared.json",
   "name": "audiodn",
-  "description": "AudioDN MCP plus skills for secure audio infrastructure in coding agents.",
+  "description": "Hosted audio library for coding agents: store, play, and preview audio, plus AudioDN MCP and integration skills.",
   "category": "Developer Tools",
   "keywords": [
     "audio",

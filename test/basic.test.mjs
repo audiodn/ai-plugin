@@ -35,16 +35,16 @@ describe('ai-plugin', () => {
 
   it('MCP configs point at production hosted endpoint', () => {
     const url = 'https://mcp.audiodelivery.net/mcp';
-    assert.equal(
-      JSON.parse(readFileSync(join(ROOT, 'dist', 'cursor', 'mcp.json'), 'utf8')).mcpServers.audiodn
-        .url,
-      url,
-    );
+    const mcp = JSON.parse(readFileSync(join(ROOT, 'dist', 'cursor', 'mcp.json'), 'utf8'));
+    assert.equal(mcp.mcpServers.audiodn.url, url);
+    assert.equal(mcp.mcpServers.audiodn.headers.Authorization, 'Bearer ${ADN_API_KEY}');
     const claude = JSON.parse(readFileSync(join(ROOT, 'dist', 'claude', '.mcp.json'), 'utf8'));
     assert.equal(claude.mcpServers.audiodn.url, url);
     assert.equal(claude.mcpServers.audiodn.type, 'http');
+    assert.equal(claude.mcpServers.audiodn.headers.Authorization, 'Bearer ${ADN_API_KEY}');
     const openai = JSON.parse(readFileSync(join(ROOT, 'dist', 'openai', '.mcp.json'), 'utf8'));
     assert.equal(openai.audiodn.url, url);
+    assert.equal(openai.audiodn.headers.Authorization, 'Bearer ${ADN_API_KEY}');
     assert.equal(openai.mcpServers, undefined);
   });
 
@@ -55,6 +55,32 @@ describe('ai-plugin', () => {
     assert.equal(man.interface.displayName, 'AudioDN');
     assert.ok(man.interface.privacyPolicyURL.includes('/privacy'));
     assert.ok(man.interface.logo.startsWith('./'));
+  });
+
+  it('Cursor manifest uses AudioDN display name and official logo', () => {
+    const man = JSON.parse(
+      readFileSync(join(ROOT, 'dist', 'cursor', '.cursor-plugin', 'plugin.json'), 'utf8'),
+    );
+    assert.equal(man.name, 'audiodn');
+    assert.equal(man.displayName, 'AudioDN');
+    assert.equal(man.author.name, 'Audio Delivery Network');
+    assert.equal(man.logo, 'assets/logo.svg');
+    assert.ok(existsSync(join(ROOT, 'dist', 'cursor', man.logo)));
+    assert.equal(man.variables?.properties?.ADN_API_KEY?.type, 'string');
+    assert.ok(!man.variables?.required?.includes('ADN_API_KEY'));
+    const svg = readFileSync(join(ROOT, 'assets', 'logo.svg'), 'utf8');
+    assert.ok(svg.includes('AudioDN'));
+    assert.ok(svg.includes('#DF4D85'));
+    assert.ok(!svg.includes('M34 78V50'));
+  });
+
+  it('ships store-agent-audio command and a store/play/preview skill description', () => {
+    const cmd = join(ROOT, 'src', 'commands', 'store-agent-audio.md');
+    assert.ok(existsSync(cmd), cmd);
+    const skill = readFileSync(join(ROOT, 'src', 'skills', 'audiodn', 'SKILL.md'), 'utf8');
+    assert.ok(skill.includes('hosted place to keep audio'));
+    assert.ok(skill.includes('Plugins → AudioDN → Configure'));
+    assert.ok(existsSync(join(ROOT, 'dist', 'cursor', 'commands', 'store-agent-audio.md')));
   });
 
   it('Claude manifest has displayName and http MCP type', () => {
