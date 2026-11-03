@@ -1,25 +1,25 @@
 # MCP readiness audit (OpenAI / marketplace)
 
-**Audited:** 2026-11-02  
+**Audited:** 2026-11-03  
 **Hosted URL:** `https://mcp.audiodelivery.net/mcp`  
 **Registry:** `net.audiodelivery/mcp`  
-**npm:** `@audiodn/mcp` (local source audited at 0.3.5)  
+**npm:** `@audiodn/mcp` (local source audited at 0.4.0)  
 **Script:** `node scripts/audit-mcp.mjs` (reads `mcp/src/tools/types.ts` and tool inventories)
 
 ## Transport / auth
 
 | Mode | Auth |
 |------|------|
-| Hosted Streamable HTTP | Knowledge tools: no key. Live API tools: `Authorization: Bearer adn_...` or `X-ADN-API-Key`. Delete tools **not** exposed on hosted. |
-| Local stdio `npx -y @audiodn/mcp` | `ADN_API_KEY` required for live tools; `ADN_MCP_ALLOW_DELETE=1` gates deletes. |
+| Hosted Streamable HTTP | OAuth 2.1 (authorization code + PKCE) against AudioDN account. Legacy API Access key via `Authorization: Bearer` / `X-ADN-API-Key` still works. Unauthenticated `/mcp` → 401 + protected-resource metadata. Full live tools including deletes when authenticated. |
+| Local stdio `npx -y @audiodn/mcp` | Knowledge tools without key; `ADN_API_KEY` enables live tools including deletes. |
 
 ## Annotation status
 
-In `mcp/src/tools/types.ts` (0.3.4+ / 0.3.5):
+In `mcp/src/tools/types.ts` (0.3.4+ / 0.4.0):
 
 - `READ_ONLY`, `WRITE`, `WRITE_IDEMPOTENT`, and `LOCAL_READ_ONLY` all set
   `destructiveHint: false`.
-- `DESTRUCTIVE` sets `destructiveHint: true` (gated delete tools only).
+- `DESTRUCTIVE` sets `destructiveHint: true` (delete tools).
 
 **OpenAI annotation blocker from 2026-07-19 is resolved in source.** Re-run
 `node scripts/audit-mcp.mjs` after MCP changes; `openaiBlockers` should be empty

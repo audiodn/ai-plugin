@@ -34,7 +34,7 @@ https://audiodeliverynetwork.com/terms
 
 ## Logo
 
-- File: `assets/logo.png` (412×478 PNG) and `assets/logo.svg`
+- File: `assets/logo.png` (512×512 PNG) and `assets/logo.svg`
 - Prefer square crop for directory if required during upload
 
 ## MCP server URL
@@ -43,7 +43,7 @@ https://mcp.audiodelivery.net/mcp
 
 ## Authentication description
 
-Knowledge and documentation tools on the hosted MCP server work without authentication. Live AudioDN API tools require an AudioDN API Access key sent as `Authorization: Bearer <key>` (or equivalent platform MCP header configuration). Keys must be stored in the platform’s secure credential mechanism — never in the plugin bundle. Destructive delete tools are not exposed on the hosted server.
+The hosted MCP server uses OAuth 2.1 (authorization code + PKCE) so the client signs in with the user’s AudioDN account. Authenticated sessions expose the full live API tool set, including destructive deletes (clients should confirm before calling them). A legacy API Access key as `Authorization: Bearer <key>` still works for existing configs. Keys must never be embedded in the plugin bundle.
 
 ## Data-handling explanation
 

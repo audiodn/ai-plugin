@@ -1,34 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="AudioDN">
   <title>AudioDN</title>
-  <defs>
-    <linearGradient id="adn-mark" x1="96" y1="8" x2="400" y2="504" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#DF4D85"/>
-      <stop offset="48%" stop-color="#742CC2"/>
-      <stop offset="100%" stop-color="#4E21F1"/>
-    </linearGradient>
-  </defs>
-  <rect width="512" height="512" fill="#0B1220"/>
-  <g fill="url(#adn-mark)">
-    <g transform="translate(163.3 76.5) rotate(-45)">
-      <rect x="-73.5" y="-16" width="147" height="32" rx="16"/>
-    </g>
-    <g transform="translate(178.4 142.6) rotate(-45)">
-      <rect x="-169.5" y="-16" width="339" height="32" rx="16"/>
-    </g>
-    <g transform="translate(212.7 190.4) rotate(-45)">
-      <rect x="-217.5" y="-16" width="435" height="32" rx="16"/>
-    </g>
-    <g transform="translate(222.2 262.8) rotate(-45)">
-      <rect x="-125.5" y="-16" width="251" height="32" rx="16"/>
-    </g>
-    <g transform="translate(233.7 332.8) rotate(-45)">
-      <rect x="-210.5" y="-16" width="421" height="32" rx="16"/>
-    </g>
-    <g transform="translate(305.8 343.2) rotate(-45)">
-      <rect x="-205.5" y="-16" width="411" height="32" rx="16"/>
-    </g>
-    <g transform="translate(334.6 395.4) rotate(-45)">
-      <rect x="-87" y="-16" width="174" height="32" rx="16"/>
-    </g>
+  <rect width="512" height="512" fill="#2F654C"/>
+  <g transform="translate(71.68 71.68) scale(0.36)" fill="none" stroke="#FFFFFF" stroke-width="79.3141" stroke-linecap="round">
+    <line x1="124.1418" y1="324.2298" x2="362.0842" y2="86.2873"/>
+    <line x1="65.2571" y1="575.3912" x2="556.1636" y2="84.4847"/>
+    <line x1="256.3321" y1="576.5930" x2="747.2385" y2="85.6865"/>
+    <line x1="134.9574" y1="890.2443" x2="661.3149" y2="363.8868"/>
+    <line x1="301.9978" y1="915.4807" x2="827.1536" y2="390.3249"/>
+    <line x1="482.8581" y1="926.8971" x2="958.7429" y2="451.0122"/>
+    <line x1="662.5166" y1="939.5153" x2="920.8884" y2="681.1434"/>
   </g>
 </svg>

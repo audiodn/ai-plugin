@@ -58,11 +58,8 @@ function copyText(from, to) {
 
 function pluginReadme(listing, platform) {
   const authNote =
-    platform === 'Claude Code'
-      ? `- Live API (store/play/preview): set plugin/env \`ADN_API_KEY\` so \`.mcp.json\` can send \`Authorization: Bearer \${ADN_API_KEY}\`.`
-      : platform === 'Cursor'
-        ? `- Live API (store/play/preview): open **Plugins → AudioDN → Configure** and paste an API Access key (\`ADN_API_KEY\`). Knowledge tools work with no key.`
-        : `- Live API (store/play/preview): paste an API Access key in the host credential UI (do not commit keys). Knowledge tools work with no key.`;
+    `- Hosted MCP: connect \`https://mcp.audiodelivery.net/mcp\` and sign in with your AudioDN account via OAuth (no pasted API key).`
+    + `\n- Local stdio alternative: \`ADN_API_KEY\` with \`npx @audiodn/mcp\`.`;
 
   return `# ${listing.displayName} plugin (${platform})
 
@@ -95,15 +92,12 @@ MIT — see LICENSE.
 `;
 }
 
-/** Cursor remote MCP — url only; type not required. */
+/** Cursor remote MCP — url only; OAuth account login (no pasted API key). */
 function mcpConfigCursor(listing) {
   return {
     mcpServers: {
       audiodn: {
         url: listing.mcp.hostedUrl,
-        headers: {
-          Authorization: 'Bearer ${ADN_API_KEY}',
-        },
       },
     },
   };
@@ -119,9 +113,6 @@ function mcpConfigClaude(listing) {
       audiodn: {
         type: 'http',
         url: listing.mcp.hostedUrl,
-        headers: {
-          Authorization: 'Bearer ${ADN_API_KEY}',
-        },
       },
     },
   };
@@ -135,9 +126,6 @@ function mcpConfigOpenai(listing) {
   return {
     audiodn: {
       url: listing.mcp.hostedUrl,
-      headers: {
-        Authorization: 'Bearer ${ADN_API_KEY}',
-      },
     },
   };
 }

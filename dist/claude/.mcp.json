@@ -2,10 +2,7 @@
   "mcpServers": {
     "audiodn": {
       "type": "http",
-      "url": "https://mcp.audiodelivery.net/mcp",
-      "headers": {
-        "Authorization": "Bearer ${ADN_API_KEY}"
-      }
+      "url": "https://mcp.audiodelivery.net/mcp"
     }
   }
 }

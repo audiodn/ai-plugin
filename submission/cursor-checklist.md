@@ -18,7 +18,7 @@ Verify in Customize: skill `audiodn`, rule `audiodn` (not always-on), commands, 
 ## Manifest validation
 
 - [x] `dist/cursor/.cursor-plugin/plugin.json` — name `audiodn`, displayName `AudioDN`, version, description, author, logo SVG, primaryColor, optional `variables.ADN_API_KEY`, keywords
-- [x] `mcp.json` hosted URL + `Authorization: Bearer ${ADN_API_KEY}`
+- [x] `mcp.json` hosted URL (OAuth account login; no pasted Authorization header)
 - [x] Root `.cursor-plugin/marketplace.json` → `dist/cursor`
 - [x] Skill / rule / command frontmatter present
 - [x] Rule `alwaysApply: false`

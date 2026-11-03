@@ -146,15 +146,15 @@ for (const platform of ['cursor', 'claude', 'openai']) {
   }
 
   if (platform === 'cursor' || platform === 'claude') {
-    const auth = mcp.mcpServers?.audiodn?.headers?.Authorization;
-    if (auth !== 'Bearer ${ADN_API_KEY}') {
-      fail(`${platform}: MCP Authorization header must be Bearer \${ADN_API_KEY} (plugin variable)`);
+    const headers = mcp.mcpServers?.audiodn?.headers;
+    if (headers && Object.keys(headers).length > 0) {
+      fail(`${platform}: hosted MCP should use OAuth (no Authorization headers in mcp.json)`);
     }
   }
   if (platform === 'openai') {
-    const auth = mcp.audiodn?.headers?.Authorization;
-    if (auth !== 'Bearer ${ADN_API_KEY}') {
-      fail('openai: MCP Authorization header must be Bearer ${ADN_API_KEY}');
+    const headers = mcp.audiodn?.headers;
+    if (headers && Object.keys(headers).length > 0) {
+      fail('openai: hosted MCP should use OAuth (no Authorization headers in mcp.json)');
     }
   }
 

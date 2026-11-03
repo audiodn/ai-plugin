@@ -15,8 +15,8 @@
   "shortDescription": "A hosted place for agents to store, play, and preview audio — plus the APIs to put it in your app.",
   "description": "AudioDN is a hosted audio library for coding agents: store files you generate or find, then play, preview, and deliver them. The plugin also teaches secure upload, transcoding, and playback so you do not invent S3/FFmpeg pipelines or leak API keys.",
   "longDescription": "AudioDN (Audio Delivery Network) is hosted audio infrastructure. Add it to a Cursor bot or any app when you need a durable place to keep audio that agents come across — generated clips, downloads, voice notes, podcasts, UGC — then play, preview, and reuse those tracks. This plugin wires the hosted AudioDN MCP (docs without a key; live catalog/upload/playback tools after you paste an API Access key), teaches the correct security boundaries and API sequence (upload session → per-track create → processing readiness → play session or signed delivery), and is the AudioDN plugin for AI coding tools, not a separate product.",
-  "brandColor": "#742CC2",
-  "primaryColor": "#742CC2",
+  "brandColor": "#2F654C",
+  "primaryColor": "#2F654C",
   "pluginVariables": {
     "type": "object",
     "properties": {

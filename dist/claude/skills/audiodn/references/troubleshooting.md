@@ -18,7 +18,7 @@
 ## Security reminders
 
 - Do not log Authorization headers or API keys.
-- Do not silently enable destructive deletes (`ADN_MCP_ALLOW_DELETE` is local/gated).
+- Confirm with the user before calling destructive MCP delete tools (`destructiveHint: true`).
 - Prefer env vars / platform secret stores for all secrets.
 
 ## Validator
@@ -31,6 +31,6 @@ Configure ignores with `.audiodn-validate.json` or `audiodn-validate-ignore` on 
 
 ## MCP
 
-- Hosted: `https://mcp.audiodelivery.net/mcp` — knowledge tools without a key; live API tools with `Authorization: Bearer adn_...`
-- Local: `npx -y @audiodn/mcp` with `ADN_API_KEY`
+- Hosted: `https://mcp.audiodelivery.net/mcp` — OAuth account login (no pasted key); legacy API Access Bearer still works
+- Local: `npx -y @audiodn/mcp` with `ADN_API_KEY` (knowledge tools work without a key)
 - Registry: `net.audiodelivery/mcp`

@@ -15,7 +15,8 @@ Hosted audio library for coding agents: store, play, and preview audio, plus Aud
 - Registry: `net.audiodelivery/mcp`
 - Local stdio: `npx -y @audiodn/mcp` with `ADN_API_KEY`
 - Knowledge/doc tools work without a key on the hosted server; live API tools need a Bearer API Access key.
-- Live API (store/play/preview): paste an API Access key in the host credential UI (do not commit keys). Knowledge tools work with no key.
+- Hosted MCP: connect `https://mcp.audiodelivery.net/mcp` and sign in with your AudioDN account via OAuth (no pasted API key).
+- Local stdio alternative: `ADN_API_KEY` with `npx @audiodn/mcp`.
 
 ## Canonical resources
 

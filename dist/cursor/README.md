@@ -15,7 +15,8 @@ Hosted audio library for Cursor agents — store, play, and preview files you ge
 - Registry: `net.audiodelivery/mcp`
 - Local stdio: `npx -y @audiodn/mcp` with `ADN_API_KEY`
 - Knowledge/doc tools work without a key on the hosted server; live API tools need a Bearer API Access key.
-- Live API (store/play/preview): open **Plugins → AudioDN → Configure** and paste an API Access key (`ADN_API_KEY`). Knowledge tools work with no key.
+- Hosted MCP: connect `https://mcp.audiodelivery.net/mcp` and sign in with your AudioDN account via OAuth (no pasted API key).
+- Local stdio alternative: `ADN_API_KEY` with `npx @audiodn/mcp`.
 
 ## Canonical resources
 

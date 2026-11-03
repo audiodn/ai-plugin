@@ -1,6 +1,6 @@
 {
   "name": "audiodn",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Hosted audio library for agents: store, play, and preview audio, plus secure AudioDN upload and playback skills.",
   "displayName": "AudioDN",
   "author": {

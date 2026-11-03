@@ -1,9 +1,25 @@
 # Changelog
 
+## 1.1.1
+
+- Player attribute preferred name is `outputs` (`output-indexes` and `variants`
+  remain compatible aliases; layout `variant` unchanged).
+
+## 1.1.0
+
+- Default skill language uses **output presets / outputs**; legacy “variant”
+  names mentioned briefly where wire fields or paths still use them.
+- Player docs prefer `output-indexes` (`variants` still works); layout `variant`
+  unchanged.
+- `known-endpoints.json` adds canonical `/v1/output_preset` and
+  `/v1/track/{track_id}/output` (legacy paths retained).
+- Updated processing, playback, upload, webhooks, product overview, and related
+  references.
+
 ## 1.0.2 — 2026-08-21
 
 - Cursor plugin **Configure** field for optional `ADN_API_KEY` so hosted MCP live tools (list, store, play) can run
-- MCP configs send `Authorization: Bearer ${ADN_API_KEY}` (empty key = docs-only tools)
+- Hosted MCP configs use the bare URL for OAuth account login (no pasted Authorization header)
 - Copy and skill describe AudioDN as a hosted library to store, play, and preview agent audio
 - New `/store-agent-audio` workflow; install steps in README
 

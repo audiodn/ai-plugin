@@ -1,6 +1,6 @@
 {
   "name": "audiodn",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Hosted audio library for coding agents: store, play, and preview audio, plus AudioDN MCP and integration skills.",
   "author": {
     "name": "Audio Delivery Network",
@@ -39,7 +39,7 @@
       "Add a secure AudioDN upload flow without exposing server API keys.",
       "Audit our AudioDN integration for missing per-track uploads and client-side server keys."
     ],
-    "brandColor": "#742CC2",
+    "brandColor": "#2F654C",
     "logo": "./assets/logo-square.png",
     "composerIcon": "./assets/logo-square.png"
   }

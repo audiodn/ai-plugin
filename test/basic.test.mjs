@@ -37,14 +37,14 @@ describe('ai-plugin', () => {
     const url = 'https://mcp.audiodelivery.net/mcp';
     const mcp = JSON.parse(readFileSync(join(ROOT, 'dist', 'cursor', 'mcp.json'), 'utf8'));
     assert.equal(mcp.mcpServers.audiodn.url, url);
-    assert.equal(mcp.mcpServers.audiodn.headers.Authorization, 'Bearer ${ADN_API_KEY}');
+    assert.equal(mcp.mcpServers.audiodn.headers, undefined);
     const claude = JSON.parse(readFileSync(join(ROOT, 'dist', 'claude', '.mcp.json'), 'utf8'));
     assert.equal(claude.mcpServers.audiodn.url, url);
     assert.equal(claude.mcpServers.audiodn.type, 'http');
-    assert.equal(claude.mcpServers.audiodn.headers.Authorization, 'Bearer ${ADN_API_KEY}');
+    assert.equal(claude.mcpServers.audiodn.headers, undefined);
     const openai = JSON.parse(readFileSync(join(ROOT, 'dist', 'openai', '.mcp.json'), 'utf8'));
     assert.equal(openai.audiodn.url, url);
-    assert.equal(openai.audiodn.headers.Authorization, 'Bearer ${ADN_API_KEY}');
+    assert.equal(openai.audiodn.headers, undefined);
     assert.equal(openai.mcpServers, undefined);
   });
 
@@ -70,7 +70,9 @@ describe('ai-plugin', () => {
     assert.ok(!man.variables?.required?.includes('ADN_API_KEY'));
     const svg = readFileSync(join(ROOT, 'assets', 'logo.svg'), 'utf8');
     assert.ok(svg.includes('AudioDN'));
-    assert.ok(svg.includes('#DF4D85'));
+    assert.ok(svg.includes('#2F654C'));
+    assert.ok(svg.includes('#FFFFFF'));
+    assert.ok(!svg.includes('#DF4D85'));
     assert.ok(!svg.includes('M34 78V50'));
   });
 
