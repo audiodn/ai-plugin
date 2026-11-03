@@ -31,5 +31,5 @@ marketplace submission.
 
 ## Marketing language note
 
-`mcp/server.json` must not claim loudness/LUFS “normalize”. Current wording is
-upload / transcode / stream / deliver variants.
+`mcp/server.json` must **not** claim LUFS or loudness targeting. Current wording is
+upload / transcode / stream / deliver variants (no LUFS).
