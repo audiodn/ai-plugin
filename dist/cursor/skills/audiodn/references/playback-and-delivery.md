@@ -11,17 +11,19 @@ any of these can use.
 ## Play sessions (per-listener)
 
 `POST /v1/play_session/{scope}`, scope `track` or `collection` (`playlist` is
-reserved and returns 400). Authorized by a **Bearer** key that is **either** an
-API Access key on the server **or** a scoped Client-Side Player key used
-in-client (the two calls look nearly identical; only the key differs):
+unsupported — the handler currently errors). Authorized by a **Bearer** key that
+is **either** an API Access key on the server **or** a scoped Client-Side Player
+key used in-client (the two calls look nearly identical; only the key differs):
 
-- Body must include a non-empty `variants` array (OpenAPI), plus `track_id` or
-  `collection_id`, optional `expires_in` (seconds; default 3600, min 60, max
-  86400) and `is_downloadable`.
+- Body must include a non-empty `variants` array of delivery indexes (from
+  `GET /v1/variant`), plus `track_id` or `collection_id`, optional `expires_in`
+  (seconds; default 3600, min 60, max 86400) and `is_downloadable`.
 - Returns `play_session_id` and `first_track` with signed `variants[].url`,
-  waveform `levels`, and cover sizes.
+  waveform `levels`, and cover sizes. Pass the session ID to the ADN Player;
+  use signed URLs only with a custom player.
 - More tracks: `GET /v1/play/{play_session_id}/{play_track_id}` (no Bearer — the
-  session ID authorizes).
+  session ID authorizes). `GET /v1/play_session/{play_session_id}` is also
+  session-gated (no Bearer).
 
 ## Downloads
 
@@ -38,22 +40,25 @@ Downloads require a session created with `is_downloadable: true`.
 
 Sign delivery URLs on your server or edge with a URL Signing key (HMAC-SHA256),
 bypassing play sessions and the ADN round trip at play time. Append the `verify`
-query parameter **last**. The signing secret never goes to the client. Deliver the
-signed URL to the client directly or via a server redirect. This skips play
-sessions entirely — do not also mint a play session for the same stream, and do
-not feed signed URLs to the ADN Player (the player accepts only a client key or
-`play-session-id`).
+query parameter **last**. The MAC covers `pathname + query + issued` (unix
+seconds); the token is `{issued}-{base64url_mac}`. Full algorithm:
+https://audiodeliverynetwork.com/docs/api/signing-keys (not fully spelled in
+OpenAPI). The signing secret never goes to the client. Deliver the signed URL to
+the client directly or via a server redirect. This skips play sessions entirely —
+do not also mint a play session for the same stream, and do not feed signed URLs
+to the ADN Player (the player accepts only a client key or `play-session-id`).
 
 Build the URL to sign from the `track.base_url` returned by every
 track-creation response (a durable prefix on the organization's unique
 `audiodelivery.net` subdomain): append the variant suffix and extension, e.g.
-`{base_url}_128.mp3`, then sign. `track.base_path` is the same prefix without
+`{base_url}_lq.mp3`, then sign. `track.base_path` is the same prefix without
 the host, for when you construct the host yourself.
 
 ## Inline share
 
-Documented separately: stream via share key path on the API host (302). Prefer
-OpenAPI + share docs; do not invent paths.
+`GET /v1/stream/{track_id}/{share_key}` validates an Inline Share key and returns
+302 to a short-lived signed CDN URL for that key's single variant. No Bearer
+header. See https://audiodeliverynetwork.com/docs/api/share.
 
 ## Components
 

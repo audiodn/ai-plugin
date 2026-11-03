@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 /**
- * Audit MCP tool annotation readiness from local mcp sources or published package.
- * Does not modify mcp/. Writes/refresh notes used by submission/mcp-readiness.md
- * (this script prints a machine-readable summary; markdown is maintained in submission/).
+ * Audit MCP tool annotation readiness from local mcp sources.
+ * Reads annotation presets from mcp/src/tools/types.ts and inventories tools
+ * from mcp/src/tools/api-tools.ts + knowledge-tools.ts when present.
+ * Writes submission/mcp-audit-stamp.json. Soft-exit 0 for documentation CI.
  */
 import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -10,39 +11,12 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const MCP_URL = 'https://mcp.audiodelivery.net/mcp';
-
-/** Expected annotation matrix based on mcp/src/tools (validated 2026-07-19). */
-const TOOLS = [
-  { name: 'adn_about', kind: 'knowledge', readOnlyHint: true, openWorldHint: false, destructiveHint: false, missing: ['destructiveHint'] },
-  { name: 'adn_search_docs', kind: 'knowledge', readOnlyHint: true, openWorldHint: false, destructiveHint: false, missing: ['destructiveHint'] },
-  { name: 'adn_list_operations', kind: 'knowledge', readOnlyHint: true, openWorldHint: false, destructiveHint: false, missing: ['destructiveHint'] },
-  { name: 'adn_get_operation', kind: 'knowledge', readOnlyHint: true, openWorldHint: false, destructiveHint: false, missing: ['destructiveHint'] },
-  { name: 'adn_get_guide', kind: 'knowledge', readOnlyHint: true, openWorldHint: false, destructiveHint: false, missing: ['destructiveHint'] },
-  { name: 'adn_list_variant_types', kind: 'knowledge', readOnlyHint: true, openWorldHint: false, destructiveHint: false, missing: ['destructiveHint'] },
-  { name: 'adn_list_creators', kind: 'api-read', readOnlyHint: true, openWorldHint: true, destructiveHint: false, missing: ['destructiveHint'] },
-  { name: 'adn_get_creator', kind: 'api-read', readOnlyHint: true, openWorldHint: true, destructiveHint: false, missing: ['destructiveHint'] },
-  { name: 'adn_list_collections', kind: 'api-read', readOnlyHint: true, openWorldHint: true, destructiveHint: false, missing: ['destructiveHint'] },
-  { name: 'adn_get_collection', kind: 'api-read', readOnlyHint: true, openWorldHint: true, destructiveHint: false, missing: ['destructiveHint'] },
-  { name: 'adn_list_tracks', kind: 'api-read', readOnlyHint: true, openWorldHint: true, destructiveHint: false, missing: ['destructiveHint'] },
-  { name: 'adn_get_track', kind: 'api-read', readOnlyHint: true, openWorldHint: true, destructiveHint: false, missing: ['destructiveHint'] },
-  { name: 'adn_get_upload_session', kind: 'api-read', readOnlyHint: true, openWorldHint: true, destructiveHint: false, missing: ['destructiveHint'] },
-  { name: 'adn_get_play_session', kind: 'api-read', readOnlyHint: true, openWorldHint: true, destructiveHint: false, missing: ['destructiveHint'] },
-  { name: 'adn_list_variants', kind: 'api-read', readOnlyHint: true, openWorldHint: true, destructiveHint: false, missing: ['destructiveHint'] },
-  { name: 'adn_create_creator', kind: 'write', readOnlyHint: false, openWorldHint: true, destructiveHint: false, missing: ['destructiveHint'], blocker: true },
-  { name: 'adn_create_collection', kind: 'write', readOnlyHint: false, openWorldHint: true, destructiveHint: false, missing: ['destructiveHint'], blocker: true },
-  { name: 'adn_create_upload_session', kind: 'write', readOnlyHint: false, openWorldHint: true, destructiveHint: false, missing: ['destructiveHint'], blocker: true },
-  { name: 'adn_create_track_in_upload_session', kind: 'write', readOnlyHint: false, openWorldHint: true, destructiveHint: false, missing: ['destructiveHint'], blocker: true },
-  { name: 'adn_create_play_session', kind: 'write', readOnlyHint: false, openWorldHint: true, destructiveHint: false, missing: ['destructiveHint'], blocker: true },
-  { name: 'adn_update_creator', kind: 'write-idempotent', readOnlyHint: false, openWorldHint: true, destructiveHint: false, missing: ['destructiveHint'], blocker: true },
-  { name: 'adn_update_collection', kind: 'write-idempotent', readOnlyHint: false, openWorldHint: true, destructiveHint: false, missing: ['destructiveHint'], blocker: true },
-  { name: 'adn_delete_creator', kind: 'destructive', readOnlyHint: false, openWorldHint: true, destructiveHint: true, missing: [], gated: true },
-  { name: 'adn_delete_collection', kind: 'destructive', readOnlyHint: false, openWorldHint: true, destructiveHint: true, missing: [], gated: true },
-];
+const MCP_ROOT = join(ROOT, '..', 'mcp');
 
 function findLocalTypes() {
   const candidates = [
     process.env.ADN_MCP_TYPES_PATH,
-    join(ROOT, '..', 'mcp', 'src', 'tools', 'types.ts'),
+    join(MCP_ROOT, 'src', 'tools', 'types.ts'),
   ].filter(Boolean);
   for (const p of candidates) {
     if (existsSync(p)) return p;
@@ -50,17 +24,106 @@ function findLocalTypes() {
   return null;
 }
 
+function parsePreset(text, name) {
+  const re = new RegExp(
+    `export const ${name}:[\\s\\S]*?=\\s*\\{([\\s\\S]*?)\\n\\};`,
+  );
+  const m = text.match(re);
+  if (!m) return null;
+  const body = m[1];
+  const bool = (key) => {
+    const hit = body.match(new RegExp(`${key}:\\s*(true|false)`));
+    return hit ? hit[1] === 'true' : undefined;
+  };
+  return {
+    readOnlyHint: bool('readOnlyHint'),
+    destructiveHint: bool('destructiveHint'),
+    idempotentHint: bool('idempotentHint'),
+    openWorldHint: bool('openWorldHint'),
+  };
+}
+
+function inventoryTools(apiPath, knowledgePath) {
+  const tools = [];
+  const scan = (file, kindDefault) => {
+    if (!existsSync(file)) return;
+    const text = readFileSync(file, 'utf8');
+    const nameRe = /name:\s*'([^']+)'/g;
+    let match;
+    while ((match = nameRe.exec(text)) !== null) {
+      const name = match[1];
+      const slice = text.slice(match.index, match.index + 600);
+      const gated = /gated:\s*'delete'/.test(slice);
+      let kind = kindDefault;
+      let annotations = {};
+      if (/DESTRUCTIVE/.test(slice) || gated) {
+        kind = 'destructive';
+        annotations = { readOnlyHint: false, openWorldHint: true, destructiveHint: true };
+      } else if (/WRITE_IDEMPOTENT/.test(slice)) {
+        kind = 'write-idempotent';
+        annotations = { readOnlyHint: false, openWorldHint: true, destructiveHint: false };
+      } else if (/WRITE/.test(slice)) {
+        kind = 'write';
+        annotations = { readOnlyHint: false, openWorldHint: true, destructiveHint: false };
+      } else if (/LOCAL_READ_ONLY/.test(slice)) {
+        kind = 'knowledge';
+        annotations = { readOnlyHint: true, openWorldHint: false, destructiveHint: false };
+      } else if (/READ_ONLY/.test(slice)) {
+        kind = kindDefault === 'knowledge' ? 'knowledge' : 'api-read';
+        annotations = {
+          readOnlyHint: true,
+          openWorldHint: kindDefault === 'knowledge' ? false : true,
+          destructiveHint: false,
+        };
+      }
+      tools.push({
+        name,
+        kind,
+        ...annotations,
+        missing: annotations.destructiveHint === undefined ? ['destructiveHint'] : [],
+        gated: gated || undefined,
+        blocker: false,
+      });
+    }
+  };
+  scan(knowledgePath, 'knowledge');
+  scan(apiPath, 'api-read');
+  return tools;
+}
+
 const typesPath = findLocalTypes();
-let typesOk = true;
+let typesOk = false;
+let presets = {};
 if (typesPath) {
   const text = readFileSync(typesPath, 'utf8');
-  const m = text.match(/export const WRITE:[\s\S]*?=\s*\{([\s\S]*?)\n\};/);
-  if (m && !/destructiveHint:\s*false/.test(m[1])) {
-    typesOk = false;
+  presets = {
+    READ_ONLY: parsePreset(text, 'READ_ONLY'),
+    WRITE: parsePreset(text, 'WRITE'),
+    WRITE_IDEMPOTENT: parsePreset(text, 'WRITE_IDEMPOTENT'),
+    DESTRUCTIVE: parsePreset(text, 'DESTRUCTIVE'),
+    LOCAL_READ_ONLY: parsePreset(text, 'LOCAL_READ_ONLY'),
+  };
+  typesOk =
+    presets.WRITE?.destructiveHint === false &&
+    presets.WRITE_IDEMPOTENT?.destructiveHint === false &&
+    presets.READ_ONLY?.destructiveHint === false &&
+    presets.LOCAL_READ_ONLY?.destructiveHint === false &&
+    presets.DESTRUCTIVE?.destructiveHint === true;
+}
+
+const apiToolsPath = join(MCP_ROOT, 'src', 'tools', 'api-tools.ts');
+const knowledgeToolsPath = join(MCP_ROOT, 'src', 'tools', 'knowledge-tools.ts');
+const tools = inventoryTools(apiToolsPath, knowledgeToolsPath);
+
+// A write tool is an OpenAI blocker only if the WRITE preset still omits destructiveHint:false.
+for (const t of tools) {
+  if ((t.kind === 'write' || t.kind === 'write-idempotent') && !typesOk) {
+    t.blocker = true;
+    t.missing = ['destructiveHint'];
   }
 }
 
-const blockers = TOOLS.filter((t) => t.blocker);
+const blockers = tools.filter((t) => t.blocker);
 const summary = {
   auditedAt: new Date().toISOString(),
   hostedUrl: MCP_URL,
@@ -68,9 +131,10 @@ const summary = {
   npmPackage: '@audiodn/mcp',
   localTypesPath: typesPath,
   writePresetHasDestructiveFalse: typesOk,
-  toolCount: TOOLS.length,
+  presets,
+  toolCount: tools.length,
   openaiBlockers: blockers.map((t) => t.name),
-  tools: TOOLS,
+  tools,
 };
 
 mkdirSync(join(ROOT, 'submission'), { recursive: true });
@@ -79,10 +143,10 @@ writeFileSync(
   `${JSON.stringify(summary, null, 2)}\n`,
 );
 
-// Soft pass: always exit 0 so CI documents state; readiness markdown flags blockers.
-console.log(`audit-mcp: inventoried ${TOOLS.length} tools`);
+console.log(`audit-mcp: inventoried ${tools.length} tools from local mcp sources`);
 console.log(`hosted: ${MCP_URL}`);
-if (!typesOk) {
-  console.log('BLOCKER: WRITE preset missing destructiveHint: false (fix in mcp repo)');
-}
+console.log(`WRITE destructiveHint:false present: ${typesOk}`);
 console.log(`OpenAI annotation blockers: ${blockers.length}`);
+if (!typesOk) {
+  console.log('BLOCKER: non-destructive presets missing destructiveHint: false (fix in mcp repo)');
+}

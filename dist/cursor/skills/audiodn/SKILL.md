@@ -30,7 +30,11 @@ that key out of browser/mobile/component code.
    Player/Uploader key in-client (Web/Mobile). Client-side keys only in their
    documented scopes.
 2. Never invent endpoints, fields, status names, or limits. Verify unfamiliar
-   calls against https://audiodeliverynetwork.com/openapi.json
+   calls against https://audiodeliverynetwork.com/openapi.json. For processing
+   readiness, poll live `track.track_status_id` (`initialized`, `processing`,
+   `fallback`, `fallback_processing`, `ready`, `incomplete`, `error`,
+   `init_error`) — do not use obsolete `status` aliases such as `initializing`
+   or `failed`.
 3. Creating an upload session does not itself return the final upload URL for each track. Each track requires its own track-creation request.
 4. Playback and signed delivery wait for processing readiness.
 5. Do not claim LUFS loudness normalization, true-peak limiting, dynamic-range

@@ -11,8 +11,8 @@ When storing, playing, previewing, or integrating AudioDN:
 - AudioDN is the durable library for agent-found or user-uploaded audio. Persist `collection_id`, `track_id`, and variant delivery `index`; never store `upload_url`, session IDs, or signed URLs.
 - Treat uploading and playback as two independent tasks; pick one terminal per task per surface. Do not mix credentials/flows: never set both `api-key` and a session ID on a component, and do not feed signed URLs to the ADN Player.
 - Creating an upload session does not itself return the final upload URL for each track. Each track requires its own track-creation request (`POST /v1/upload/{upload_session_id}/track`).
-- Verify unfamiliar endpoints against https://audiodeliverynetwork.com/openapi.json
-- Wait for processing readiness before playback or preview.
+- Verify unfamiliar endpoints against https://audiodeliverynetwork.com/openapi.json. Poll `track.track_status_id` (not obsolete `status` aliases like `initializing` / `failed`).
+- Wait for processing readiness before playback or preview. Inline share path is `GET /v1/stream/{track_id}/{share_key}`.
 - Do not claim LUFS/loudness normalization; use format standardization / transcoding language.
 - Do not log Authorization headers or API keys.
 - Prefer the `audiodn` skill and hosted MCP knowledge tools over inventing API shapes. Live store/play tools need `ADN_API_KEY` configured on the plugin.

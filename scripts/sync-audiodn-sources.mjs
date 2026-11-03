@@ -17,8 +17,15 @@ const local = process.argv.includes('--local');
 const writeStamp = process.argv.includes('--write-stamp') || true;
 
 const siblings = {
-  www: join(ROOT, '..', 'www'),
-  api: join(ROOT, '..', 'api'),
+  // Prefer sibling monorepo layout (ai-plugin next to audiodn-mono).
+  www: [
+    join(ROOT, '..', 'audiodn-mono', 'www'),
+    join(ROOT, '..', 'www'),
+  ].find((p) => existsSync(p)) || join(ROOT, '..', 'audiodn-mono', 'www'),
+  api: [
+    join(ROOT, '..', 'audiodn-mono', 'api'),
+    join(ROOT, '..', 'api'),
+  ].find((p) => existsSync(p)) || join(ROOT, '..', 'audiodn-mono', 'api'),
   mcp: join(ROOT, '..', 'mcp'),
   agentKit: join(ROOT, '..', 'agent-kit'),
 };

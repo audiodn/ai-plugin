@@ -28,6 +28,7 @@ const DOCUMENTED = [
 async function loadOpenApi() {
   const localCandidates = [
     process.env.ADN_OPENAPI_PATH,
+    join(ROOT, '..', 'audiodn-mono', 'www', 'public', 'openapi.json'),
     join(ROOT, '..', 'www', 'public', 'openapi.json'),
   ].filter(Boolean);
 

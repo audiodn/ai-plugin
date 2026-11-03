@@ -63,9 +63,9 @@ Decision tree (mirrors the docs): **who creates/authorizes the session?**
 Full guide (with per-platform code and native tabs):
 https://audiodeliverynetwork.com/docs/integration/uploading
 
-**Per-file lifecycle (all upload terminals).** An upload session authorizes files
-but returns no upload URL by itself. For each file: `POST /v1/upload_session`,
-then `POST /v1/upload/{upload_session_id}/track`, then `PUT` the bytes to
+**Per-file lifecycle (all upload terminals).** Create **one** upload session
+(`POST /v1/upload_session`), then for **each** file call
+`POST /v1/upload/{upload_session_id}/track` and `PUT` the bytes to
 `track_upload.upload_url`. A single-file upload (e.g. the Recorder) may include a
 nested `track` on session create to get the first upload URL in the same request.
 Detail: `references/upload-flow.md`.

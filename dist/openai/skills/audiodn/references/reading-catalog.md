@@ -6,14 +6,17 @@ reads use a session ID and take no Authorization header.
 
 ## Server reads (API Access Bearer)
 
-- `GET /v1/track/{track_id}` — one track: metadata, `track_status_id`, `format`,
-  `duration`, waveform `levels`, `cover_image`, `theme`. (`getTrack`)
+- `GET /v1/track/{track_id}` — one track row: metadata, `track_status_id`,
+  `format`, `duration`, waveform `levels`, `cloudflare_image_id`, and when
+  provisioned `transcription` / `transcription_language`. (`getTrack`)
+  `cover_image` size URLs appear on **play-session** payloads, not on this GET.
+  `base_path` / `base_url` are returned on **create** responses.
 - `GET /v1/collection/{collection_id}` — one collection. (`getCollection`)
-- `GET /v1/collection` — list collections (`limit`, `offset`). (`listCollections`)
+- `GET /v1/collection` — list collections (`limit` max 100, `offset`). (`listCollections`)
 - `GET /v1/collection/{collection_id}/track` — list tracks in a collection.
   (`listCollectionTracks`)
-- `GET /v1/variant` — list org variants; `GET /v1/variant/{variant_id}` — one
-  variant. (`listVariants`, `getVariant`)
+- `GET /v1/variant` — list org variants (`index`, `variant_type_id`, `props`);
+  `GET /v1/variant/{variant_id}` — one variant. (`listVariants`, `getVariant`)
 
 ## Session-gated reads (no Bearer — session ID authorizes)
 
@@ -35,7 +38,8 @@ Create a collection before uploading if you do not have one:
 
 - `track.track_status_id === 'ready'` (or a usable `incomplete`) gates playback —
   see `references/processing-and-variants.md`.
-- Prefer the ready-made `cover_image` size URLs in responses over rebuilding them.
+- Prefer the ready-made `cover_image` size URLs on play-session / play-track
+  responses over rebuilding them from `cloudflare_image_id`.
 
 Canonical: https://audiodeliverynetwork.com/docs/api/tracks,
 https://audiodeliverynetwork.com/docs/api/collections,

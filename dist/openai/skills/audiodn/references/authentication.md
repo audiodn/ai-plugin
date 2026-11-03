@@ -7,8 +7,8 @@
 | **API Access** | Server only | Full API access via `Authorization: Bearer <key>`. Mint client keys; create upload/play sessions; manage resources. Created in the dashboard, not via public `POST /v1/api_key`. |
 | **Client-Side Player** (`player`) | Browser / app / `<audiodn-player>` | Playback-scoped. Can create play sessions in-client. |
 | **Client-Side Uploader** (`uploader`) | Browser / app / `<audiodn-uploader>` | Upload-scoped. Can create upload sessions in-client. |
-| **Inline Share** (`share`) | Public share path | Single-variant inline share (dashboard) |
-| **URL Signing key** | Server / edge only | HMAC-SHA256 signed delivery URLs |
+| **Inline Share** (`share`) | Public share path | Single-variant inline share via `GET /v1/stream/{track_id}/{share_key}`. Creatable via `POST /v1/api_key` or the dashboard. Exactly one variant; `expires_at` ignored. |
+| **URL Signing key** | Server / edge only | HMAC-SHA256 signed delivery URLs. Dashboard-only (not creatable via `POST /v1/api_key`). |
 | **Session IDs** | Path capability tokens | Authorize specific upload/play endpoints without Bearer |
 
 ## Who creates sessions
@@ -28,8 +28,8 @@ server-only.
 ## Minting client-side keys
 
 `POST /v1/api_key` (API Access Bearer required) creates `player`, `uploader`, or
-`share` keys only. API Access, Inline Share, and URL Signing keys are created in
-the dashboard, not via this endpoint. Scoping and lifetime:
+`share` keys only. API Access and URL Signing keys are created in the dashboard,
+not via this endpoint. Scoping and lifetime:
 
 - `title` and `api_key_type_id` (`player` | `uploader` | `share`) required.
 - `collection_id` limits the key to one collection; `track_id` limits to a track
@@ -45,8 +45,12 @@ the dashboard, not via this endpoint. Scoping and lifetime:
 
 - `GET /v1/upload_session/{upload_session_id}`
 - `POST /v1/upload/{upload_session_id}/track`
+- `GET /v1/play_session/{play_session_id}`
 - `GET /v1/play/{play_session_id}/{play_track_id}`
 - `GET /v1/play/{play_session_id}/{play_track_id}/{variant_index}/download`
+
+Inline share uses the share key in the path (also no Bearer):
+`GET /v1/stream/{track_id}/{api_key}`.
 
 ## Rules
 

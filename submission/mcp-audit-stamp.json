@@ -1,20 +1,42 @@
 {
-  "auditedAt": "2026-08-21T15:12:53.272Z",
+  "auditedAt": "2026-11-03T00:02:46.090Z",
   "hostedUrl": "https://mcp.audiodelivery.net/mcp",
   "registryName": "net.audiodelivery/mcp",
   "npmPackage": "@audiodn/mcp",
-  "localTypesPath": "/Users/gdbate/dev/audiodn/audiodn-mono/mcp/src/tools/types.ts",
+  "localTypesPath": "/Volumes/DEV/audiodn/mcp/src/tools/types.ts",
   "writePresetHasDestructiveFalse": true,
-  "toolCount": 24,
-  "openaiBlockers": [
-    "adn_create_creator",
-    "adn_create_collection",
-    "adn_create_upload_session",
-    "adn_create_track_in_upload_session",
-    "adn_create_play_session",
-    "adn_update_creator",
-    "adn_update_collection"
-  ],
+  "presets": {
+    "READ_ONLY": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": true
+    },
+    "WRITE": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": true
+    },
+    "WRITE_IDEMPOTENT": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": true
+    },
+    "DESTRUCTIVE": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": true
+    },
+    "LOCAL_READ_ONLY": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false
+    }
+  },
+  "toolCount": 28,
+  "openaiBlockers": [],
   "tools": [
     {
       "name": "adn_about",
@@ -22,9 +44,8 @@
       "readOnlyHint": true,
       "openWorldHint": false,
       "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ]
+      "missing": [],
+      "blocker": false
     },
     {
       "name": "adn_search_docs",
@@ -32,9 +53,8 @@
       "readOnlyHint": true,
       "openWorldHint": false,
       "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ]
+      "missing": [],
+      "blocker": false
     },
     {
       "name": "adn_list_operations",
@@ -42,9 +62,8 @@
       "readOnlyHint": true,
       "openWorldHint": false,
       "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ]
+      "missing": [],
+      "blocker": false
     },
     {
       "name": "adn_get_operation",
@@ -52,9 +71,8 @@
       "readOnlyHint": true,
       "openWorldHint": false,
       "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ]
+      "missing": [],
+      "blocker": false
     },
     {
       "name": "adn_get_guide",
@@ -62,9 +80,8 @@
       "readOnlyHint": true,
       "openWorldHint": false,
       "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ]
+      "missing": [],
+      "blocker": false
     },
     {
       "name": "adn_list_variant_types",
@@ -72,9 +89,8 @@
       "readOnlyHint": true,
       "openWorldHint": false,
       "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ]
+      "missing": [],
+      "blocker": false
     },
     {
       "name": "adn_list_creators",
@@ -82,9 +98,8 @@
       "readOnlyHint": true,
       "openWorldHint": true,
       "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ]
+      "missing": [],
+      "blocker": false
     },
     {
       "name": "adn_get_creator",
@@ -92,79 +107,8 @@
       "readOnlyHint": true,
       "openWorldHint": true,
       "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ]
-    },
-    {
-      "name": "adn_list_collections",
-      "kind": "api-read",
-      "readOnlyHint": true,
-      "openWorldHint": true,
-      "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ]
-    },
-    {
-      "name": "adn_get_collection",
-      "kind": "api-read",
-      "readOnlyHint": true,
-      "openWorldHint": true,
-      "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ]
-    },
-    {
-      "name": "adn_list_tracks",
-      "kind": "api-read",
-      "readOnlyHint": true,
-      "openWorldHint": true,
-      "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ]
-    },
-    {
-      "name": "adn_get_track",
-      "kind": "api-read",
-      "readOnlyHint": true,
-      "openWorldHint": true,
-      "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ]
-    },
-    {
-      "name": "adn_get_upload_session",
-      "kind": "api-read",
-      "readOnlyHint": true,
-      "openWorldHint": true,
-      "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ]
-    },
-    {
-      "name": "adn_get_play_session",
-      "kind": "api-read",
-      "readOnlyHint": true,
-      "openWorldHint": true,
-      "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ]
-    },
-    {
-      "name": "adn_list_variants",
-      "kind": "api-read",
-      "readOnlyHint": true,
-      "openWorldHint": true,
-      "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ]
+      "missing": [],
+      "blocker": false
     },
     {
       "name": "adn_create_creator",
@@ -172,54 +116,8 @@
       "readOnlyHint": false,
       "openWorldHint": true,
       "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ],
-      "blocker": true
-    },
-    {
-      "name": "adn_create_collection",
-      "kind": "write",
-      "readOnlyHint": false,
-      "openWorldHint": true,
-      "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ],
-      "blocker": true
-    },
-    {
-      "name": "adn_create_upload_session",
-      "kind": "write",
-      "readOnlyHint": false,
-      "openWorldHint": true,
-      "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ],
-      "blocker": true
-    },
-    {
-      "name": "adn_create_track_in_upload_session",
-      "kind": "write",
-      "readOnlyHint": false,
-      "openWorldHint": true,
-      "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ],
-      "blocker": true
-    },
-    {
-      "name": "adn_create_play_session",
-      "kind": "write",
-      "readOnlyHint": false,
-      "openWorldHint": true,
-      "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ],
-      "blocker": true
+      "missing": [],
+      "blocker": false
     },
     {
       "name": "adn_update_creator",
@@ -227,21 +125,8 @@
       "readOnlyHint": false,
       "openWorldHint": true,
       "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ],
-      "blocker": true
-    },
-    {
-      "name": "adn_update_collection",
-      "kind": "write-idempotent",
-      "readOnlyHint": false,
-      "openWorldHint": true,
-      "destructiveHint": false,
-      "missing": [
-        "destructiveHint"
-      ],
-      "blocker": true
+      "missing": [],
+      "blocker": false
     },
     {
       "name": "adn_delete_creator",
@@ -250,7 +135,44 @@
       "openWorldHint": true,
       "destructiveHint": true,
       "missing": [],
-      "gated": true
+      "gated": true,
+      "blocker": false
+    },
+    {
+      "name": "adn_list_collections",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [],
+      "blocker": false
+    },
+    {
+      "name": "adn_get_collection",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [],
+      "blocker": false
+    },
+    {
+      "name": "adn_create_collection",
+      "kind": "write",
+      "readOnlyHint": false,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [],
+      "blocker": false
+    },
+    {
+      "name": "adn_update_collection",
+      "kind": "write-idempotent",
+      "readOnlyHint": false,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [],
+      "blocker": false
     },
     {
       "name": "adn_delete_collection",
@@ -259,7 +181,113 @@
       "openWorldHint": true,
       "destructiveHint": true,
       "missing": [],
-      "gated": true
+      "gated": true,
+      "blocker": false
+    },
+    {
+      "name": "adn_list_tracks",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [],
+      "blocker": false
+    },
+    {
+      "name": "adn_get_track",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [],
+      "blocker": false
+    },
+    {
+      "name": "adn_update_track",
+      "kind": "api-read",
+      "missing": [
+        "destructiveHint"
+      ],
+      "blocker": false
+    },
+    {
+      "name": "adn_delete_track",
+      "kind": "destructive",
+      "readOnlyHint": false,
+      "openWorldHint": true,
+      "destructiveHint": true,
+      "missing": [],
+      "gated": true,
+      "blocker": false
+    },
+    {
+      "name": "adn_create_upload_session",
+      "kind": "write",
+      "readOnlyHint": false,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [],
+      "blocker": false
+    },
+    {
+      "name": "adn_get_upload_session",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [],
+      "blocker": false
+    },
+    {
+      "name": "adn_create_track_in_upload_session",
+      "kind": "api-read",
+      "missing": [
+        "destructiveHint"
+      ],
+      "blocker": false
+    },
+    {
+      "name": "adn_create_play_session",
+      "kind": "api-read",
+      "missing": [
+        "destructiveHint"
+      ],
+      "blocker": false
+    },
+    {
+      "name": "adn_get_play_session",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [],
+      "blocker": false
+    },
+    {
+      "name": "adn_get_play_track",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [],
+      "blocker": false
+    },
+    {
+      "name": "adn_list_variants",
+      "kind": "api-read",
+      "readOnlyHint": true,
+      "openWorldHint": true,
+      "destructiveHint": false,
+      "missing": [],
+      "blocker": false
+    },
+    {
+      "name": "adn_create_track_variant",
+      "kind": "api-read",
+      "missing": [
+        "destructiveHint"
+      ],
+      "blocker": false
     }
   ]
 }

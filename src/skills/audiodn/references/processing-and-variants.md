@@ -8,10 +8,11 @@ immediately playable.
 
 - **Poll** (server, Bearer): `GET /v1/track/{track_id}` until
   `track.track_status_id === 'ready'`.
-- Terminal statuses also include `incomplete` (some variants failed but at least
-  one may play), `error`, `init_error`.
-- Transitional: `initialized` / processing states, `fallback`, `fallback_processing`
-  (prefer live `track_status_id` over simplified OpenAPI `status` enums when they differ).
+- Live field is always `track.track_status_id`. Transitional:
+  `initialized`, `processing`, `fallback`, `fallback_processing`. Terminal:
+  `ready`, `incomplete` (some variants failed but at least one may play),
+  `error`, `init_error`. Do not poll a legacy `status` field or enums such as
+  `initializing` / `failed`.
 - **Webhook** (preferred in production): Track Processing webhook fires on
   terminal outcomes / when the file set completes (`files_completed_at`), not on
   every transitional status. Dashboard-configured; header `X-ADN-Event: track.status_changed`.
@@ -28,8 +29,12 @@ Do not assume a just-uploaded track is ready. The uploader component’s
   `track.base_url` from the track-creation response — plus a variant suffix and
   extension (e.g. `{base_url}_preview.mp3`).
 - Track-specific API creation supports types such as `transcode` and `preview`
-  (lossy codecs include `aac`, `mp3`, `ogg`, `opus` per docs). Org-wide recipes
-  (analysis, waveform assets, original) are configured in the dashboard.
+  (lossy codecs include `aac`, `mp3`, `ogg`, `opus` per docs). Preview bodies may
+  include `preview_type`, `preview_seconds` / percent fields, and
+  `preview_start_percent`. Optional `is_required` and `notes` are accepted.
+  Org-wide recipes (analysis, waveform assets, original) are configured in the
+  dashboard. Transcription fields on the track are org-provisioned, not a
+  self-serve variant.
 
 Endpoints: `GET /v1/variant`, `GET /v1/variant/{variant_id}`,
 `POST /v1/track/{track_id}/variant`.
